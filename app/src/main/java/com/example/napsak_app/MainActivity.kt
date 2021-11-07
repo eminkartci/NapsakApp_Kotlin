@@ -1,3 +1,12 @@
+
+/*
+Project: Napsak
+Authors:
+- Emin Kartci
+- Metin Arda Koker
+Date: 2 November 2021
+GitHub: https://github.com/eminkartci/NapsakApp_Kotlin
+ */
 package com.example.napsak_app
 
 import androidx.appcompat.app.AppCompatActivity
@@ -5,6 +14,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 
 class MainActivity : AppCompatActivity() {
 
