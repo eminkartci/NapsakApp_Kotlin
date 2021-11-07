@@ -1,4 +1,4 @@
-package com.example.napsakappkotlin
+package com.example.napsak_app
 
 import org.junit.Test
 
