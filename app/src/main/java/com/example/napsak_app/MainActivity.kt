@@ -15,14 +15,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-
+// MainActivitiy is the first activated activitiy
 class MainActivity : AppCompatActivity() {
 
+    // lateinit: those variables will be initialized later because the instances are not created ye
     private lateinit var rvBoard: RecyclerView
-    private lateinit var tvNumMoves: TextView
-    private lateinit var tvNumPairs: TextView
+    private lateinit var tvNumMoves: TextView // number of Activities
+    private lateinit var tvNumPairs: TextView // the matching percentage
 
 
+    // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
