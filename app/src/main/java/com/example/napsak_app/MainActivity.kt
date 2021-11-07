@@ -26,14 +26,19 @@ class MainActivity : AppCompatActivity() {
 
     // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {
+        // call super constructor
         super.onCreate(savedInstanceState)
+        // setContentView declares which xml is used for front-end
         setContentView(R.layout.activity_main)
 
+        // initialize the variables
         rvBoard = findViewById(R.id.rvBoard)
         tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
+        // Recycler view adapter: The Adapter provides access to the data items.
         rvBoard.adapter = MemoryBoardAdapter(this,8) // Card numbers
+        // to have constant sizes
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(this,2) // Column numbers
     }
