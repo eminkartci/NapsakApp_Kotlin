@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvNumMoves: TextView // number of Activities
     private lateinit var tvNumPairs: TextView // the matching percentage
 
+    private var boardSize: BoardSize = BoardSize.EASY
 
     // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
         // Recycler view adapter: The Adapter provides access to the data items.
-        rvBoard.adapter = MemoryBoardAdapter(this,8) // Card numbers
+        rvBoard.adapter = MemoryBoardAdapter(this,boardSize) // Card numbers
         // to have constant sizes
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(this,2) // Column numbers
