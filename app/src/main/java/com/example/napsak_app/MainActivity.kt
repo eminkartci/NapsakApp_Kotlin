@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.napsak_app.models.BoardSize
 
 // MainActivitiy is the first activated activitiy
 class MainActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvNumMoves: TextView // number of Activities
     private lateinit var tvNumPairs: TextView // the matching percentage
 
-    private var boardSize: BoardSize = BoardSize.EASY
+    private var boardSize: BoardSize = BoardSize.MEDIUM
 
     // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {

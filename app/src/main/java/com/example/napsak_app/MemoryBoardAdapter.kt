@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.napsak_app.models.BoardSize
 //import com.rkpandey.mymemory.models.BoardSize
 //import com.rkpandey.mymemory.models.MemoryCard
 //import com.squareup.picasso.Picasso
@@ -18,7 +19,8 @@ import kotlin.math.min as min
 // Activity Board 
 class MemoryBoardAdapter(
     private val context: Context,
-    private val BoardSize: BoardSize) :
+    private val BoardSize: BoardSize
+) :
     // overwrite ViewHolder
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -44,8 +46,8 @@ class MemoryBoardAdapter(
         // constructor
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             // set the width and height of the cards
-            val cardWidth = parent.width / boardSize.getWidth() - (2* MARGIN_SIZE)
-            val cardHeight = parent.height / boardSize.getHeight() - (2 * MARGIN_SIZE)
+            val cardWidth = parent.width / BoardSize.getWidth() - (2* MARGIN_SIZE)
+            val cardHeight = parent.height / BoardSize.getHeight() - (2 * MARGIN_SIZE)
             val cardSideLength: Int = min(cardWidth, cardHeight)
 
 
@@ -72,7 +74,7 @@ class MemoryBoardAdapter(
             //holder.bind(position)
         }
 
-        override fun getItemCount() = boardSize.numCards
+        override fun getItemCount() = BoardSize.numCards
     }
 
 
