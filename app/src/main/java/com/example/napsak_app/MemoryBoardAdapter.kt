@@ -19,7 +19,8 @@ import kotlin.math.min as min
 // Activity Board 
 class MemoryBoardAdapter(
     private val context: Context,
-    private val BoardSize: BoardSize
+    private val BoardSize: BoardSize,
+    private val cardClickListener: CardClickListener
 ) :
     // overwrite ViewHolder
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -30,6 +31,10 @@ class MemoryBoardAdapter(
         private const val MARGIN_SIZE = 10
     }
 
+    interface CardClickListener {
+        fun onCardClicked(position: Int)
+    }
+
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             // Creating image Button
             private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
@@ -38,6 +43,7 @@ class MemoryBoardAdapter(
             fun bind(position: Int){
                 imageButton.setOnClickListener {
                     Log.i(TAG, "Clicked on position $position")
+                    cardClickListener.onCardClicked(position)
                 }
             }
 

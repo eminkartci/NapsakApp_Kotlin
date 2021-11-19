@@ -11,6 +11,7 @@ package com.example.napsak_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +20,16 @@ import com.example.napsak_app.models.BoardSize
 // MainActivitiy is the first activated activitiy
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     // lateinit: those variables will be initialized later because the instances are not created ye
     private lateinit var rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView // number of Activities
     private lateinit var tvNumPairs: TextView // the matching percentage
 
-    private var boardSize: BoardSize = BoardSize.MEDIUM
+    private var boardSize: BoardSize = BoardSize.EASY
 
     // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +43,15 @@ class MainActivity : AppCompatActivity() {
         tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
+
+
         // Recycler view adapter: The Adapter provides access to the data items.
-        rvBoard.adapter = MemoryBoardAdapter(this,boardSize) // Card numbers
+        rvBoard.adapter = MemoryBoardAdapter(this,boardSize,object: MemoryBoardAdapter.CardClickListener{
+            override fun onCardClicked(position: Int) {
+                Log.i(TAG, "Card clicked $position")
+            }
+
+        }) // Card numbers
         // to have constant sizes
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(this,2) // Column numbers
