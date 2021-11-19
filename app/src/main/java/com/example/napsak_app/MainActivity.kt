@@ -11,11 +11,12 @@ package com.example.napsak_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.models.BoardSize
+import com.example.napsak_app.models.MemoryCard
+import com.example.napsak_app.utils.DEFAULT_ICONS
 
 // MainActivitiy is the first activated activitiy
 class MainActivity : AppCompatActivity() {
@@ -43,12 +44,22 @@ class MainActivity : AppCompatActivity() {
         tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
+        // The number of copies in here there is 3 copy because of less card drafts
+        val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs()/2)
+        val randomizedImages = (chosenImages + chosenImages + chosenImages).shuffled()
+        // Defining memoryCards
+        val memoryCards = randomizedImages.map{ MemoryCard(it) }
+
 
 
         // Recycler view adapter: The Adapter provides access to the data items.
-        rvBoard.adapter = MemoryBoardAdapter(this,boardSize,object: MemoryBoardAdapter.CardClickListener{
+        rvBoard.adapter = MemoryBoardAdapter(this,boardSize,memoryCards, object: MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
-                Log.i(TAG, "Card clicked $position")
+                updateWithFlip(position)
+            }
+
+            private fun updateWithFlip(position: Int) {
+
             }
 
         }) // Card numbers

@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.models.BoardSize
+import com.example.napsak_app.models.MemoryCard
 //import com.rkpandey.mymemory.models.BoardSize
 //import com.rkpandey.mymemory.models.MemoryCard
 //import com.squareup.picasso.Picasso
@@ -20,6 +19,7 @@ import kotlin.math.min as min
 class MemoryBoardAdapter(
     private val context: Context,
     private val BoardSize: BoardSize,
+    private val cards: List<MemoryCard>,
     private val cardClickListener: CardClickListener
 ) :
     // overwrite ViewHolder
@@ -41,6 +41,9 @@ class MemoryBoardAdapter(
 
             // Setting Button function
             fun bind(position: Int){
+                val memoryCard = cards[position]
+                // Checks the card face up then shows the corresponding image
+                imageButton.setImageResource(if (cards[position].isFaceUp) cards[position].identifier else R.drawable.ic_launcher_background)
                 imageButton.setOnClickListener {
                     Log.i(TAG, "Clicked on position $position")
                     cardClickListener.onCardClicked(position)
