@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="model"
-            type="" />
+            name="user"
+            type="com.example.napsak_app.models.User" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -31,12 +31,12 @@
             app:cardCornerRadius="8dp">
 
             <TextView
-                android:id="@+id/tvNumMoves"
+                android:id="@+id/matchingPercentage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Activities: 0"
+                android:text="@{`Matcing: `+user.matching_percenrage + `%`}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </androidx.cardview.widget.CardView>
 
@@ -48,12 +48,12 @@
             app:cardCornerRadius="8dp">
 
             <TextView
-                android:id="@+id/tvNumPairs"
+                android:id="@+id/activityCount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Matching 87%"
+                android:text="@{user.activity_count+` Activity`}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>

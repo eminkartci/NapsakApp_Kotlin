@@ -16,9 +16,11 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.napsak_app.databinding.ActivityMainBinding
 import com.example.napsak_app.models.BoardSize
 import com.example.napsak_app.models.MemoryCard
 import com.example.napsak_app.models.MemoryGame
+import com.example.napsak_app.models.User
 import com.example.napsak_app.utils.DEFAULT_ICONS
 
 // MainActivitiy is the first activated activitiy
@@ -46,12 +48,21 @@ class MainActivity : AppCompatActivity() {
 
 
         // setContentView declares which xml is used for front-end
-        setContentView(R.layout.activity_main)
+        // BEFORE DATA BINDING
+        // setContentView(R.layout.activity_main)
+        // DATA BINDING
+        val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        
+        // Get user -> Hard Code Now
+        val user: User = User("Emin Kartci",22, listOf("Coding","Reading","Guitar","Movie"),"91","12")
+        // Bind the user
+        mainBinding.user = user
+
 
         // initialize the variables
         rvBoard = findViewById(R.id.rvBoard)
-        tvNumMoves = findViewById(R.id.tvNumMoves)
-        tvNumPairs = findViewById(R.id.tvNumPairs)
+        tvNumMoves = findViewById(R.id.matchingPercentage)
+        tvNumPairs = findViewById(R.id.activityCount)
 
         // The number of copies in here there is 3 copy because of less card drafts
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs()/2)
