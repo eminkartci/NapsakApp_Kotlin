@@ -11,6 +11,7 @@ package com.example.napsak_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,8 +58,9 @@ class MainActivity : AppCompatActivity() {
         val memoryGame = MemoryGame(boardSize)
 
         // Recycler view adapter: The Adapter provides access to the data items.
-        adapter = MemoryBoardAdapter(this,boardSize,memoryGame.cards, object: MemoryBoardAdapter.CardClickListener{
+        adapter = MemoryBoardAdapter(this,boardSize,memoryCards, object: MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
+                Log.i(TAG, "Card clicked $position")
                 updateWithFlip(position)
             }
 
