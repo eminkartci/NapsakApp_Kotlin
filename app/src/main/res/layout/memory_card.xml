@@ -22,6 +22,6 @@
             android:background="@color/white"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/AMEAN_logo"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
     </androidx.cardview.widget.CardView>
 </LinearLayout>

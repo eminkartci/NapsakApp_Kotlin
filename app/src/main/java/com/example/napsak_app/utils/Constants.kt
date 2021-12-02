@@ -10,6 +10,11 @@ val DEFAULT_ICONS = listOf(
     R.drawable.ic_baseline_looks_3_24,
     R.drawable.ic_baseline_looks_4_24,
     R.drawable.ic_baseline_looks_5_24,
-    R.drawable.ic_baseline_looks_6_24
+    R.drawable.ic_baseline_looks_6_24,
+    R.drawable.Books,
+    R.drawable.Coding,
+    R.drawable.Walking,
+    R.drawable.movie,
+    R.drawable.music
 
 )

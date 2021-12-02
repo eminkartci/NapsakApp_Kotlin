@@ -43,7 +43,7 @@ class MemoryBoardAdapter(
             fun bind(position: Int){
                 val memoryCard = cards[position]
                 // Checks the card face up then shows the corresponding image
-                imageButton.setImageResource(if (cards[position].isFaceUp) cards[position].identifier else R.drawable.ic_launcher_background)
+                imageButton.setImageResource(if (cards[position].isFaceUp) cards[position].identifier else R.drawable.AMEAN_logo)
                 imageButton.setOnClickListener {
                     Log.i(TAG, "Clicked on position $position")
                     cardClickListener.onCardClicked(position)
