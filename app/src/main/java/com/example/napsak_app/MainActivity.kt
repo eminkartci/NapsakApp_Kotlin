@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.databinding.ActivityMainBinding
 import com.example.napsak_app.models.BoardSize
-import com.example.napsak_app.models.MemoryCard
+import com.example.napsak_app.models.NapsakCard
 import com.example.napsak_app.models.MemoryGame
 import com.example.napsak_app.models.User
 import com.example.napsak_app.utils.DEFAULT_ICONS
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     // lateinit: those variables will be initialized later because the instances are not created ye
     private lateinit var memoryGame: MemoryGame
-    private lateinit var adapter: MemoryBoardAdapter
+    private lateinit var adapter: NapsakBoardAdapter
 
     private lateinit var rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView // number of Activities
@@ -68,12 +68,12 @@ class MainActivity : AppCompatActivity() {
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs()/2)
         val randomizedImages = (chosenImages + chosenImages + chosenImages).shuffled()
         // Defining memoryCards
-        val memoryCards = randomizedImages.map{ MemoryCard(it) }
+        val memoryCards = randomizedImages.map{ NapsakCard(it) }
 
         val memoryGame = MemoryGame(boardSize)
 
         // Recycler view adapter: The Adapter provides access to the data items.
-        adapter = MemoryBoardAdapter(this,boardSize,memoryCards, object: MemoryBoardAdapter.CardClickListener{
+        adapter = NapsakBoardAdapter(this,boardSize,memoryCards, object: NapsakBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
                 Log.i(TAG, "Card clicked $position")
                 updateWithFlip(position)

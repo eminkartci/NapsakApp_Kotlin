@@ -1,6 +1,6 @@
 package com.example.napsak_app.models
 
-data class MemoryCard(
+data class NapsakCard(
     // MemoryCard attributes
     val identifier: Int,
     // It will be changing while the card flipped
