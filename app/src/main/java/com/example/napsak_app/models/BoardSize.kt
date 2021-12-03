@@ -19,7 +19,7 @@ enum class BoardSize(val numCards: Int) {
     }
 
     fun getNumPairs(): Int {
-        return numCards / 2
+        return numCards
     }
 
 }

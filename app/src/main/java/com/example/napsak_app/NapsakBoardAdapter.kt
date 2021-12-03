@@ -23,7 +23,7 @@ class NapsakBoardAdapter(
     private val cardClickListener: CardClickListener
 ) :
     // overwrite ViewHolder
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<NapsakBoardAdapter.ViewHolder>() {
 
     companion object {
         // Card Names are class names
@@ -43,7 +43,7 @@ class NapsakBoardAdapter(
             fun bind(position: Int){
                 val memoryCard = cards[position]
                 // Checks the card face up then shows the corresponding image
-                imageButton.setImageResource(if (cards[position].isFaceUp) cards[position].identifier else R.drawable.AMEAN_logo)
+                imageButton.setImageResource(if (cards[position].isFaceUp) memoryCard.identifier else R.drawable.amean_logo)
                 imageButton.setOnClickListener {
                     Log.i(TAG, "Clicked on position $position")
                     cardClickListener.onCardClicked(position)
@@ -77,10 +77,10 @@ class NapsakBoardAdapter(
         // But as you scroll you'll start getting view holders
         // that were used for rows that went off screen
         // and you have to replace old data that they held with new data.
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: NapsakBoardAdapter.ViewHolder, position: Int) {
 
             // BU FONKSİYONU TANIMIYOR
-            //holder.bind(position)
+            holder.bind(position)
         }
 
         override fun getItemCount() = BoardSize.numCards

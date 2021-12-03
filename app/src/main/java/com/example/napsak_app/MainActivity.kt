@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         tvNumPairs = findViewById(R.id.activityCount)
 
         // The number of copies in here there is 3 copy because of less card drafts
-        val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs()/2)
+        val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
         val randomizedImages = (chosenImages + chosenImages + chosenImages).shuffled()
         // Defining memoryCards
         val memoryCards = randomizedImages.map{ NapsakCard(it) }
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         val memoryGame = MemoryGame(boardSize)
 
         // Recycler view adapter: The Adapter provides access to the data items.
-        adapter = NapsakBoardAdapter(this,boardSize,memoryCards, object: NapsakBoardAdapter.CardClickListener{
+        adapter = NapsakBoardAdapter(this,boardSize,memoryGame.cards, object: NapsakBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
                 Log.i(TAG, "Card clicked $position")
                 updateWithFlip(position)
