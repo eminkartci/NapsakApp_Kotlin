@@ -4,10 +4,15 @@ import com.example.napsak_app.R
 
 // The Data of the card front page with Icons it will be changed
 val DEFAULT_ICONS = listOf(
-    R.drawable.books,
-    R.drawable.coding,
+    R.drawable.reading,
+    R.drawable.chatting,
     R.drawable.walking,
-    R.drawable.movie,
-    R.drawable.music
+    R.drawable.cinema,
+    R.drawable.music,
+    R.drawable.cooking,
+    R.drawable.drink_water,
+    R.drawable.language,
+    R.drawable.podcast,
+    R.drawable.youtube
 
 )
