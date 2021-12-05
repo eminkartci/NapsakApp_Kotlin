@@ -14,5 +14,4 @@ val DEFAULT_ICONS = listOf(
     R.drawable.language,
     R.drawable.podcast,
     R.drawable.youtube
-
 )
