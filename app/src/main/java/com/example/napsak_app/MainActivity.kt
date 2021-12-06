@@ -18,6 +18,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -134,6 +135,9 @@ class MainActivity : AppCompatActivity() {
     private val clickListener: View.OnClickListener = View.OnClickListener { view ->
         when (view.id) {
             R.id.cvRefresh -> {
+                // Inform the user
+                Toast.makeText(mainContext,"New Events!!",Toast.LENGTH_SHORT).show()
+                // update the events
                 setEvents()
             }
         }
