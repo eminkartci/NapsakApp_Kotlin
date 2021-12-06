@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Napsak_App">
         <activity
+            android:name=".PersonalTestActivity"
+            android:exported="true" />
+        <activity
             android:name=".EventActivity"
             android:exported="true" />
         <activity

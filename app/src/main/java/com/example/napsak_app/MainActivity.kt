@@ -16,7 +16,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView // number of Activities
-    private lateinit var tvNumPairs: TextView // the matching percentage
+    private lateinit var cvRefresh: CardView // the matching percentage
 
     private var boardSize: BoardSize = BoardSize.EASY
 
@@ -67,8 +69,11 @@ class MainActivity : AppCompatActivity() {
         // initialize the variables
         rvBoard = findViewById(R.id.rvBoard)
         tvNumMoves = findViewById(R.id.matchingPercentage)
-        tvNumPairs = findViewById(R.id.activityCount)
+        cvRefresh = findViewById(R.id.cvRefresh)
 
+        // set on click for refresh card view
+
+        cvRefresh.setOnClickListener(clickListener)
 
         // The number of copies in here there is 3 copy because of less card drafts
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
@@ -118,10 +123,20 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.im_personal_test -> {
                 // Go to the test activity
-                setEvents()
+                val personalTestIntent = Intent(mainContext,PersonalTestActivity::class.java)
+                startActivity(personalTestIntent)
             }
         }
 
         return super.onOptionsItemSelected(item)
     }
+
+    private val clickListener: View.OnClickListener = View.OnClickListener { view ->
+        when (view.id) {
+            R.id.cvRefresh -> {
+                setEvents()
+            }
+        }
+    }
 }
+
