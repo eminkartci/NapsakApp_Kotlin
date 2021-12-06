@@ -14,6 +14,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -74,8 +76,11 @@ class MainActivity : AppCompatActivity() {
         // Defining memoryCards
         val memoryCards = randomizedImages.map{ NapsakCard(it) }
 
-        val memoryGame = MemoryGame(boardSize)
+        setEvents()
+    }
 
+    private fun setEvents() {
+        memoryGame = MemoryGame(boardSize)
         // Recycler view adapter: The Adapter provides access to the data items.
         adapter = NapsakBoardAdapter(this,boardSize,memoryGame.cards, object: NapsakBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
@@ -97,10 +102,26 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        // Pass the adapter and layout manager
         rvBoard.adapter = adapter
-        // Card numbers
-        // to have constant sizes
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(this,2) // Column numbers
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.napsak_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.im_personal_test -> {
+                // Go to the test activity
+                setEvents()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
