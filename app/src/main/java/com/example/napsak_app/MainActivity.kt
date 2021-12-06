@@ -9,6 +9,8 @@ GitHub: https://github.com/eminkartci/NapsakApp_Kotlin
  */
 package com.example.napsak_app
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     // lateinit: those variables will be initialized later because the instances are not created ye
     private lateinit var memoryGame: MemoryGame
     private lateinit var adapter: NapsakBoardAdapter
+    private lateinit var mainContext: Context
 
     private lateinit var rvBoard: RecyclerView
     private lateinit var tvNumMoves: TextView // number of Activities
@@ -57,12 +60,13 @@ class MainActivity : AppCompatActivity() {
         val user: User = User("Emin Kartci",22, listOf("Coding","Reading","Guitar","Movie"),"91","12")
         // Bind the user
         mainBinding.user = user
-
+        mainContext = this
 
         // initialize the variables
         rvBoard = findViewById(R.id.rvBoard)
         tvNumMoves = findViewById(R.id.matchingPercentage)
         tvNumPairs = findViewById(R.id.activityCount)
+
 
         // The number of copies in here there is 3 copy because of less card drafts
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
@@ -80,8 +84,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             private fun updateWithFlip(position: Int) {
-                memoryGame.flipCard(position)
-                adapter.notifyDataSetChanged()
+                // if the card is already flipped open detail fragment
+                if(memoryGame.cards[position].isFaceUp){
+                    Log.i(TAG, "Event Detail Fragment will be shown")
+                    val eventActivityIntent = Intent(mainContext,EventActivity::class.java)
+                    startActivity(eventActivityIntent)
+                }else{
+                    memoryGame.flipCard(position)
+                    adapter.notifyDataSetChanged()
+                }
+
             }
 
         })

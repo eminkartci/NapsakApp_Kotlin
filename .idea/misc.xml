@@ -11,7 +11,9 @@
         <entry key="..\:/Users/Metin/Desktop/AMEAN/NapsakApp_Kotlin/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/Metin/Desktop/AMEAN/NapsakApp_Kotlin/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2972222222222222" />
+        <entry key="app/src/main/res/layout/activity_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14361702127659576" />
+        <entry key="app/src/main/res/layout/fragment_activity_details.xml" value="0.75" />
         <entry key="app/src/main/res/layout/memory_card.xml" value="0.613161928064382" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14479166666666668" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14479166666666668" />
