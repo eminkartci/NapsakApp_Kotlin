@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2972222222222222" />
         <entry key="app/src/main/res/layout/activity_event.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14361702127659576" />
+        <entry key="app/src/main/res/layout/activity_new_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_personal_test.xml" value="0.16847826086956522" />
         <entry key="app/src/main/res/layout/dialog_board_size.xml" value="0.15715579710144928" />
         <entry key="app/src/main/res/layout/fragment_activity_details.xml" value="0.75" />
