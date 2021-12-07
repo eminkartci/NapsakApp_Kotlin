@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         
         // Get user -> Hard Code Now
-        val user: User = User("Emin Kartci",22, listOf("Coding","Reading","Guitar","Movie"),"91","12")
+        val user = User("Emin Kartci",22, listOf("Coding","Reading","Guitar","Movie"),"91","12")
         // Bind the user
         mainBinding.user = user
         mainContext = this
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
         val randomizedImages = (chosenImages + chosenImages + chosenImages).shuffled()
         // Defining memoryCards
-        val memoryCards = randomizedImages.map{ NapsakCard(it) }
+        // val memoryCards = randomizedImages.map{ NapsakCard(it) }
 
         setEvents()
     }
