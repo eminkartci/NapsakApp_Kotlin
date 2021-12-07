@@ -146,8 +146,7 @@ class MainActivity : AppCompatActivity() {
                 // Inform the user
                 Toast.makeText(mainContext,"New Events!!",Toast.LENGTH_SHORT).show()
                 // update the events
-                val newEventIntent = Intent(mainContext,R.layout.activity_new_event::class.java)
-                startActivity(newEventIntent)
+                setEvents()
             }
         }
     }
@@ -158,7 +157,8 @@ class MainActivity : AppCompatActivity() {
                 // Inform the user
                 Toast.makeText(mainContext,"What's your event?",Toast.LENGTH_LONG).show()
                 // update the events
-
+                val newEventIntent = Intent(mainContext,NewEventActivity::class.java)
+                startActivity(newEventIntent)
             }
         }
     }
