@@ -9,6 +9,11 @@ class EventActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
 
+        // home icon show
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+
+        // action name
+        supportActionBar?.title = "Spotify Event!"
 
     }
 

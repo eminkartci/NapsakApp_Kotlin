@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainContext: Context
 
     private lateinit var rvBoard: RecyclerView
-    private lateinit var tvNumMoves: TextView // number of Activities
+    private lateinit var cvNewEvent: CardView // number of Activities
     private lateinit var cvRefresh: CardView // the matching percentage
 
     private var boardSize: BoardSize = BoardSize.EASY
@@ -72,13 +72,13 @@ class MainActivity : AppCompatActivity() {
 
         // initialize the variables
         rvBoard = findViewById(R.id.rvBoard)
-        tvNumMoves = findViewById(R.id.matchingPercentage)
+        cvNewEvent = findViewById(R.id.cvNewEvent)
         cvRefresh = findViewById(R.id.cvRefresh)
 
         // set on click for refresh card view
 
-        cvRefresh.setOnClickListener(clickListener)
-
+        cvRefresh.setOnClickListener(refreshClickListener)
+        cvNewEvent.setOnClickListener(newEventclickListener)
 
 
         setEvents()
@@ -140,13 +140,24 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private val clickListener: View.OnClickListener = View.OnClickListener { view ->
+    private val refreshClickListener: View.OnClickListener = View.OnClickListener { view ->
         when (view.id) {
             R.id.cvRefresh -> {
                 // Inform the user
                 Toast.makeText(mainContext,"New Events!!",Toast.LENGTH_SHORT).show()
                 // update the events
                 setEvents()
+            }
+        }
+    }
+
+    private val newEventclickListener: View.OnClickListener = View.OnClickListener { view ->
+        when (view.id) {
+            R.id.cvNewEvent -> {
+                // Inform the user
+                Toast.makeText(mainContext,"What's your event?",Toast.LENGTH_LONG).show()
+                // update the events
+
             }
         }
     }
