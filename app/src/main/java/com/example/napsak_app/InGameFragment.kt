@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentContainer
 
 class InGameFragment : Fragment() {
 
+    private val gameViewModel: GameViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
