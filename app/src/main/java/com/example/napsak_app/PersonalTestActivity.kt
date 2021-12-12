@@ -1,5 +1,7 @@
 package com.example.napsak_app
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,10 +18,11 @@ class PersonalTestActivity : AppCompatActivity() {
     private lateinit var personalQuestions: ArrayList<PersonalQuestion>
 
     private lateinit var personalTestBinding: ActivityPersonalTestBinding
+    private lateinit var personalTestContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        personalTestContext = this
         personalTestBinding= DataBindingUtil.setContentView(this,R.layout.activity_personal_test)
         //setContentView(R.layout.activity_personal_test)
 
@@ -34,7 +37,7 @@ class PersonalTestActivity : AppCompatActivity() {
         
         // get the first question
         nextQuestion()
-        
+        addListenerstoOptions()
         // add click listeneter
         personalTestBinding.btnSubmit.setOnClickListener {
             if (isAnswered(personalQuestions.get(currentQuestionIndex))){
@@ -60,15 +63,56 @@ class PersonalTestActivity : AppCompatActivity() {
     }
 
     private fun nextQuestion(){
+
+        if(isQuestionsFinished()){
+            val mainActivityIntent = Intent(personalTestContext,MainActivity::class.java)
+            mainActivityIntent.putExtra("Personal_Choices",personalQuestions)
+            startActivity(mainActivityIntent)
+            finish()
+            return;
+        }
         // Log.i("Question Size: ", "${personalQuestions.size}")
         personalTestBinding.tvPqQuestion.text = personalQuestions.get(currentQuestionIndex).question
 
         currentQuestionIndex += 1
     }
 
+    private fun isQuestionsFinished(): Boolean {
+        return personalQuestions.size == currentQuestionIndex -1
+    }
+
     private fun isAnswered(pq : PersonalQuestion): Boolean {
         return pq.answer != -1
     }
+
+    private fun addListenerstoOptions(){
+
+        personalTestBinding.tvOption1.setOnClickListener{
+            personalQuestions.get(currentQuestionIndex).answer = 1
+            nextQuestion()
+        }
+
+        personalTestBinding.tvOption2.setOnClickListener{
+            personalQuestions.get(currentQuestionIndex).answer = 2
+            nextQuestion()
+        }
+
+        personalTestBinding.tvOption3.setOnClickListener{
+            personalQuestions.get(currentQuestionIndex).answer = 3
+            nextQuestion()
+        }
+
+        personalTestBinding.tvOption4.setOnClickListener{
+            personalQuestions.get(currentQuestionIndex).answer = 4
+            nextQuestion()
+        }
+
+        personalTestBinding.tvOption5.setOnClickListener{
+            personalQuestions.get(currentQuestionIndex).answer = 5
+            nextQuestion()
+        }
+    }
+
 
 
 }
