@@ -32,6 +32,7 @@ import com.example.napsak_app.models.NapsakCard
 import com.example.napsak_app.models.MemoryGame
 import com.example.napsak_app.models.User
 import com.example.napsak_app.utils.DEFAULT_ICONS
+import java.lang.Error
 
 // MainActivitiy is the first activated activitiy
 class MainActivity : AppCompatActivity() {
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cvNewEvent: CardView // number of Activities
     private lateinit var cvRefresh: CardView // the matching percentage
 
+    private lateinit var personalChoices: ArrayList<Int>
+
     private var boardSize: BoardSize = BoardSize.EASY
 
     // onCreate is a default function
@@ -56,8 +59,6 @@ class MainActivity : AppCompatActivity() {
         // call super constructor
         super.onCreate(savedInstanceState)
         // use data binding
-
-
         // setContentView declares which xml is used for front-end
         // BEFORE DATA BINDING
         // setContentView(R.layout.activity_main)
@@ -70,16 +71,25 @@ class MainActivity : AppCompatActivity() {
         mainBinding.user = user
         mainContext = this
 
+
+
         // initialize the variables
-        rvBoard = findViewById(R.id.rvBoard)
-        cvNewEvent = findViewById(R.id.cvNewEvent)
-        cvRefresh = findViewById(R.id.cvRefresh)
+        rvBoard = mainBinding.rvBoard
+        cvNewEvent = mainBinding.cvNewEvent
+        cvRefresh = mainBinding.cvRefresh
 
         // set on click for refresh card view
 
         cvRefresh.setOnClickListener(refreshClickListener)
         cvNewEvent.setOnClickListener(newEventclickListener)
 
+        // try to read extras from personal test activity
+//        try {
+//            personalChoices = intent.getIntegerArrayListExtra("Personal_Choices") as ArrayList<Int>
+//            Log.i("Personal Choices: ", "${personalChoices.size}")
+//        }catch (error: Error){
+//
+//        }
 
         setEvents()
     }

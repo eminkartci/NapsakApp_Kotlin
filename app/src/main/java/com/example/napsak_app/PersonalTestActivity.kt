@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.napsak_app.databinding.ActivityMainBinding
 import com.example.napsak_app.databinding.ActivityPersonalTestBinding
@@ -66,16 +67,22 @@ class PersonalTestActivity : AppCompatActivity() {
 
         if(isQuestionsFinished()){
             val mainActivityIntent = Intent(personalTestContext,MainActivity::class.java)
-            mainActivityIntent.putExtra("Personal_Choices",personalQuestions)
+            var choicesArrayList = ArrayList<Int>()
+            choicesArrayList.add(personalQuestions.get(0).answer)
+            choicesArrayList.add(personalQuestions.get(1).answer)
+            choicesArrayList.add(personalQuestions.get(2).answer)
+            choicesArrayList.add(personalQuestions.get(3).answer)
+            mainActivityIntent.putExtra("Personal_Choices",choicesArrayList)
             startActivity(mainActivityIntent)
             finish()
             return;
         }
         // Log.i("Question Size: ", "${personalQuestions.size}")
         personalTestBinding.tvPqQuestion.text = personalQuestions.get(currentQuestionIndex).question
-
+        setSelectedBackground(-1)
         currentQuestionIndex += 1
     }
+
 
     private fun isQuestionsFinished(): Boolean {
         return personalQuestions.size == currentQuestionIndex -1
@@ -89,30 +96,45 @@ class PersonalTestActivity : AppCompatActivity() {
 
         personalTestBinding.tvOption1.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 1
-            nextQuestion()
+            setSelectedBackground(1)
         }
 
         personalTestBinding.tvOption2.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 2
-            nextQuestion()
+            setSelectedBackground(2)
         }
 
         personalTestBinding.tvOption3.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 3
-            nextQuestion()
+            setSelectedBackground(3)
         }
 
         personalTestBinding.tvOption4.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 4
-            nextQuestion()
+            setSelectedBackground(4)
         }
 
         personalTestBinding.tvOption5.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 5
-            nextQuestion()
+            setSelectedBackground(5)
         }
     }
 
+    private fun setSelectedBackground(optionIndex: Int){
+        personalTestBinding.tvOption1.background = ContextCompat.getDrawable(personalTestContext,R.drawable.default_option_border_bg)
+        personalTestBinding.tvOption2.background = ContextCompat.getDrawable(personalTestContext,R.drawable.default_option_border_bg)
+        personalTestBinding.tvOption3.background = ContextCompat.getDrawable(personalTestContext,R.drawable.default_option_border_bg)
+        personalTestBinding.tvOption4.background = ContextCompat.getDrawable(personalTestContext,R.drawable.default_option_border_bg)
+        personalTestBinding.tvOption5.background = ContextCompat.getDrawable(personalTestContext,R.drawable.default_option_border_bg)
+
+        when(optionIndex){
+            1-> personalTestBinding.tvOption1.background = ContextCompat.getDrawable(personalTestContext,R.drawable.selected_option_border_bg)
+            2-> personalTestBinding.tvOption2.background = ContextCompat.getDrawable(personalTestContext,R.drawable.selected_option_border_bg)
+            3-> personalTestBinding.tvOption3.background = ContextCompat.getDrawable(personalTestContext,R.drawable.selected_option_border_bg)
+            4-> personalTestBinding.tvOption4.background = ContextCompat.getDrawable(personalTestContext,R.drawable.selected_option_border_bg)
+            5-> personalTestBinding.tvOption5.background = ContextCompat.getDrawable(personalTestContext,R.drawable.selected_option_border_bg)
+        }
+    }
 
 
 }
