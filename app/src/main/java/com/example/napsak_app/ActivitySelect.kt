@@ -10,7 +10,7 @@ class ActivitySelect : AppCompatActivity() {
         setContentView(R.layout.activity_select)
 
         val detailsFragment = ActivityDetailsFragment()
-        val tempActivity = Event(0,"Coding",R.drawable.amean_logo,5,4,3,2)
+        val tempActivity = Event(0,"Coding",R.drawable.cinema,5,4,3,2)
         var detailData = Bundle()
 
         detailData.putSerializable("Event", tempActivity);
