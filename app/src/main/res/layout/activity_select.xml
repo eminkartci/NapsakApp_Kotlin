@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ActivitySelect">
 
-    <fragment
-        android:name="com.example.napsak_app.ActivityDetailsFragment"
-        android:id="@+id/f_selected"
+    <FrameLayout
+        android:id="@+id/fl_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

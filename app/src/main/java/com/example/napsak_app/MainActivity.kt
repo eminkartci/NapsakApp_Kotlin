@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 // if the card is already flipped open detail fragment
                 if(memoryGame.cards[position].isFaceUp){
                     Log.i(TAG, "Event Detail Fragment will be shown")
-                    val eventActivityIntent = Intent(mainContext,EventActivity::class.java)
+                    val eventActivityIntent = Intent(mainContext,ActivitySelect::class.java)
                     startActivity(eventActivityIntent)
                 }else{
                     memoryGame.flipCard(position)
