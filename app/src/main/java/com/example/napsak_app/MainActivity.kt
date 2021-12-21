@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
     private fun setEvents() {
         // The number of copies in here there is 3 copy because of less card drafts
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
-        val randomizedImages = (chosenImages + chosenImages + chosenImages).shuffled()
+
         // Defining memoryCards
         // val memoryCards = randomizedImages.map{ NapsakCard(it) }
         memoryGame = MemoryGame(boardSize)

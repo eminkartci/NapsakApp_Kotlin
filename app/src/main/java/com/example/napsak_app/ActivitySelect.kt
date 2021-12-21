@@ -9,13 +9,14 @@ class ActivitySelect : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select)
 
-        val detailsFragment = ActivityDetailsFragment()
+
         val tempActivity = Event(0,"Coding",R.drawable.cinema,5,4,3,2)
+
+        val detailsFragment = ActivityDetailsFragment()
         var detailData = Bundle()
-
         detailData.putSerializable("Event", tempActivity);
-
         detailsFragment.arguments = detailData
+
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fl_fragment,detailsFragment)
