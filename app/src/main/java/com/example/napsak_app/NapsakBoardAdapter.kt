@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.models.BoardSize
+import com.example.napsak_app.models.Event
 import com.example.napsak_app.models.NapsakCard
 //import com.rkpandey.mymemory.models.BoardSize
 //import com.rkpandey.mymemory.models.MemoryCard
@@ -19,7 +20,7 @@ import kotlin.math.min as min
 class NapsakBoardAdapter(
     private val context: Context,
     private val BoardSize: BoardSize,
-    private val cards: List<NapsakCard>,
+    private val events: List<Event>,
     private val cardClickListener: CardClickListener
 ) :
     // overwrite ViewHolder
@@ -41,9 +42,9 @@ class NapsakBoardAdapter(
 
             // Setting Button function
             fun bind(position: Int){
-                val memoryCard = cards[position]
+                val memoryCard = events[position]
                 // Checks the card face up then shows the corresponding image
-                imageButton.setImageResource(if (cards[position].isFaceUp) memoryCard.identifier else R.drawable.amean_logo)
+                imageButton.setImageResource(if (events[position].isFaceUp) memoryCard.eventImage else R.drawable.amean_logo)
                 imageButton.setOnClickListener {
                     Log.i(TAG, "Clicked on position $position")
                     cardClickListener.onCardClicked(position)

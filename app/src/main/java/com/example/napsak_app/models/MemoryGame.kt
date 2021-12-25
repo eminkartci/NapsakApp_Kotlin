@@ -5,16 +5,23 @@ import com.example.napsak_app.utils.DEFAULT_ICONS
 class MemoryGame (private val boardSize: BoardSize) {
 
 
-    val cards: List<NapsakCard>
+    var events: List<Event>
+
 
     init {
         val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
         val randomizedImages = (chosenImages + chosenImages).shuffled()
-        cards = randomizedImages.map { NapsakCard(it) }
+
+
+        events = randomizedImages.mapIndexed {
+            index,image -> Event(index,false,"Event $index",image,index,index,index,index);
+        }
+
+
     }
 
     fun flipCard(position: Int) {
-        val card = cards[position]
-        card.isFaceUp = !card.isFaceUp
+        val event = events[position]
+        event.isFaceUp = !event.isFaceUp
     }
 }

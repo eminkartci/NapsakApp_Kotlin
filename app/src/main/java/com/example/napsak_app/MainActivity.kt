@@ -95,14 +95,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setEvents() {
-        // The number of copies in here there is 3 copy because of less card drafts
-        val chosenImages = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
-
         // Defining memoryCards
         // val memoryCards = randomizedImages.map{ NapsakCard(it) }
         memoryGame = MemoryGame(boardSize)
         // Recycler view adapter: The Adapter provides access to the data items.
-        adapter = NapsakBoardAdapter(this,boardSize,memoryGame.cards, object: NapsakBoardAdapter.CardClickListener{
+        adapter = NapsakBoardAdapter(this,boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
                 Log.i(TAG, "Card clicked $position")
                 updateWithFlip(position)
@@ -110,9 +107,10 @@ class MainActivity : AppCompatActivity() {
 
             private fun updateWithFlip(position: Int) {
                 // if the card is already flipped open detail fragment
-                if(memoryGame.cards[position].isFaceUp){
+                if(memoryGame.events[position].isFaceUp){
                     Log.i(TAG, "Event Detail Fragment will be shown")
                     val eventActivityIntent = Intent(mainContext,ActivitySelect::class.java)
+                    eventActivityIntent.putExtra("activity",memoryGame.events[position])
                     startActivity(eventActivityIntent)
                 }else{
                     memoryGame.flipCard(position)

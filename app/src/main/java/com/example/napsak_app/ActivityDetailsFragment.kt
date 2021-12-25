@@ -22,7 +22,6 @@ class ActivityDetailsFragment : Fragment(R.layout.fragment_activity_details) {
 
         if(args != null){
             event = args.getSerializable("Event") as Event
-
             Log.i("Event Title:", event.eventTitle)
 
         }

@@ -6,6 +6,7 @@ import java.io.Serializable
 
 data class Event(
     val eventID:Int,
+    var isFaceUp: Boolean = false,
     val eventTitle:String,
     val eventImage: Int,
     val timePoint: Int,
