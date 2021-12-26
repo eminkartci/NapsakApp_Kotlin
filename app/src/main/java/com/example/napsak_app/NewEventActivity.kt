@@ -30,6 +30,7 @@ class NewEventActivity : AppCompatActivity() {
 
         // home icon show
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.title = "New Event!"
 
         // Binding
         val newEventBinding: ActivityNewEventBinding = DataBindingUtil.setContentView(this,R.layout.activity_new_event)
