@@ -15,7 +15,7 @@ import com.example.napsak_app.databinding.ActivityNewEventBinding
 class NewEventActivity : AppCompatActivity() {
 
     companion object{
-        private const val PICK_PHOTO_CODE = 655
+
     }
 
     // Variables
@@ -37,16 +37,10 @@ class NewEventActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_new_event)
 
         // Assign
-        cvNewImage = newEventBinding.cvNewImage
-        ivNewImage = newEventBinding.ivNewEventImage
         etNewEventTitle = newEventBinding.etEventTitle
         btnShare = newEventBinding.btnShareEvent
 
-        cvNewImage.setOnClickListener({
-            val getImageIntent = Intent(Intent.ACTION_PICK)
-            getImageIntent.type = "image/*"
-            startActivityForResult(Intent.createChooser(getImageIntent,"Please select an event image."),PICK_PHOTO_CODE)
-        })
+
 
     }
 
