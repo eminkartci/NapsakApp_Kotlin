@@ -26,6 +26,8 @@ class NapsakBoardAdapter(
     // overwrite ViewHolder
     RecyclerView.Adapter<NapsakBoardAdapter.ViewHolder>() {
 
+    private var eventList = emptyList<Event>();
+
     companion object {
         // Card Names are class names
         private const val TAG = "MemoryBoardAdapter"
@@ -40,15 +42,27 @@ class NapsakBoardAdapter(
             // Creating image Button
             private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
 
+
             // Setting Button function
             fun bind(position: Int){
-                val memoryCard = events[position]
-                // Checks the card face up then shows the corresponding image
-                imageButton.setImageResource(if (events[position].isFaceUp) memoryCard.eventImage else R.drawable.amean_logo)
-                imageButton.setOnClickListener {
-                    Log.i(TAG, "Clicked on position $position")
-                    cardClickListener.onCardClicked(position)
+                if(eventList.size < 1){
+                    val memoryCard = events[position]
+                    // Checks the card face up then shows the corresponding image
+                    imageButton.setImageResource(if (events[position].isFaceUp) memoryCard.eventImage else R.drawable.amean_logo)
+                    imageButton.setOnClickListener {
+                        Log.i(TAG, "Clicked on position $position")
+                        cardClickListener.onCardClicked(position)
+                    }
+                }else{
+                    val memoryCard = eventList.get(position)
+                    // Checks the card face up then shows the corresponding image
+                    imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.eventImage else R.drawable.amean_logo)
+                    imageButton.setOnClickListener {
+                        Log.i(TAG, "Clicked on position $position")
+                        cardClickListener.onCardClicked(position)
+                    }
                 }
+
             }
 
         }
@@ -85,6 +99,11 @@ class NapsakBoardAdapter(
         }
 
         override fun getItemCount() = BoardSize.numCards
+
+        fun setData(eventList: List<Event>){
+            this.eventList = eventList
+            notifyDataSetChanged()
+        }
     }
 
 
