@@ -10,7 +10,7 @@ import androidx.room.Query
 interface EventDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addPlant(event: Event)
+    fun addEvent(event: Event)
 
     @Query(value = "SELECT * FROM event_table ORDER BY eventID ASC")
     fun readAllData(): LiveData<List<Event>>
