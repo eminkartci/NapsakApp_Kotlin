@@ -59,40 +59,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // call super constructor
         super.onCreate(savedInstanceState)
-        // use data binding
-        // setContentView declares which xml is used for front-end
-        // BEFORE DATA BINDING
-        // setContentView(R.layout.activity_main)
+
         // DATA BINDING
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        //mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
-        // Get user -> Hard Code Now
-        val user = User("Emin Kartci",22, listOf("Coding","Reading","Guitar","Movie"),"91","12")
-        // Bind the user
-        mainBinding.user = user
         mainContext = this
 
-
-
-        // initialize the variables
-        rvBoard = mainBinding.rvBoard
-        cvNewEvent = mainBinding.cvNewEvent
-        cvRefresh = mainBinding.cvRefresh
-
-        // set on click for refresh card view
-
-        cvRefresh.setOnClickListener(refreshClickListener)
-        cvNewEvent.setOnClickListener(newEventclickListener)
-
-        // try to read extras from personal test activity
-//        try {
-//            personalChoices = intent.getIntegerArrayListExtra("Personal_Choices") as ArrayList<Int>
-//            Log.i("Personal Choices: ", "${personalChoices.size}")
-//        }catch (error: Error){
-//
-//        }
-
-        setEvents()
     }
 
     private fun setEvents() {

@@ -1,59 +1,121 @@
 package com.example.napsak_app
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.napsak_app.databinding.FragmentActivityDetailsBinding
+import com.example.napsak_app.databinding.FragmentEventListBinding
+import com.example.napsak_app.models.BoardSize
+import com.example.napsak_app.models.EventViewModel
+import com.example.napsak_app.models.MemoryGame
+import com.example.napsak_app.models.User
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EventListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EventListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var listBinding: FragmentEventListBinding
+
+    private lateinit var memoryGame: MemoryGame
+    private lateinit var adapter: NapsakBoardAdapter
+
+    private lateinit var rvBoard: RecyclerView
+    private lateinit var cvNewEvent: CardView // number of Activities
+    private lateinit var cvRefresh: CardView // the matching percentage
+
+    private lateinit var mEventViewModel: EventViewModel
+
+    private var boardSize: BoardSize = BoardSize.EASY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event_list, container, false)
+
+        listBinding = FragmentEventListBinding.inflate(inflater,container,false)
+
+        // initialize the variables
+        rvBoard = listBinding.rvBoard
+        cvNewEvent = listBinding.cvNewEvent
+        cvRefresh = listBinding.cvRefresh
+
+        // set on click for refresh card view
+        cvRefresh.setOnClickListener(refreshClickListener)
+        cvNewEvent.setOnClickListener(newEventclickListener)
+
+        setEvents()
+
+        return listBinding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EventListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EventListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private val refreshClickListener: View.OnClickListener = View.OnClickListener { view ->
+        when (view.id) {
+            R.id.cvRefresh -> {
+                // Inform the user
+                Toast.makeText(requireContext(),"New Events!!", Toast.LENGTH_SHORT).show()
+                // update the events
+                setEvents()
             }
+        }
     }
+
+    private fun setEvents() {
+        // Defining memoryCards
+        // val memoryCards = randomizedImages.map{ NapsakCard(it) }
+        memoryGame = MemoryGame(boardSize)
+
+        // Recycler view adapter: The Adapter provides access to the data items.
+        adapter = NapsakBoardAdapter(requireContext(),boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
+            override fun onCardClicked(position: Int) {
+                Log.i("Event List F.", "Card clicked $position")
+                updateWithFlip(position)
+            }
+
+            private fun updateWithFlip(position: Int) {
+                // if the card is already flipped open detail fragment
+                if(memoryGame.events[position].isFaceUp){
+                    Log.i("Event List F.", "Event Detail Fragment will be shown")
+                    val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
+                    eventActivityIntent.putExtra("activity",memoryGame.events[position])
+                    startActivity(eventActivityIntent)
+                }else{
+                    memoryGame.flipCard(position)
+                    adapter.notifyDataSetChanged()
+                }
+
+            }
+
+        })
+
+        // Pass the adapter and layout manager
+        rvBoard.adapter = adapter
+//        mEventViewModel.readAllData.observe(this, Observer{ event_list ->
+//            Log.i("List: ",event_list.toString())
+//            //adapter.setData(plant_list)
+//        })
+        rvBoard.setHasFixedSize(true)
+        rvBoard.layoutManager = GridLayoutManager(requireContext(),2) // Column numbers
+    }
+
+    private val newEventclickListener: View.OnClickListener = View.OnClickListener { view ->
+        when (view.id) {
+            R.id.cvNewEvent -> {
+                // Inform the user
+                Toast.makeText(requireContext(),"What's your event?",Toast.LENGTH_LONG).show()
+                // update the events
+                val newEventIntent = Intent(requireContext(),NewEventActivity::class.java)
+                startActivity(newEventIntent)
+            }
+        }
+    }
+
+
+
 }
