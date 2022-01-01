@@ -24,13 +24,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.databinding.ActivityMainBinding
-import com.example.napsak_app.models.BoardSize
-import com.example.napsak_app.models.NapsakCard
-import com.example.napsak_app.models.MemoryGame
-import com.example.napsak_app.models.User
+import com.example.napsak_app.models.*
 import com.example.napsak_app.utils.DEFAULT_ICONS
 import java.lang.Error
 
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cvNewEvent: CardView // number of Activities
     private lateinit var cvRefresh: CardView // the matching percentage
 
-    private lateinit var personalChoices: ArrayList<Int>
+    private lateinit var mEventViewModel: EventViewModel
 
     private var boardSize: BoardSize = BoardSize.EASY
 
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         // setContentView(R.layout.activity_main)
         // DATA BINDING
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        
+        //mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
         // Get user -> Hard Code Now
         val user = User("Emin Kartci",22, listOf("Coding","Reading","Guitar","Movie"),"91","12")
         // Bind the user
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         // Defining memoryCards
         // val memoryCards = randomizedImages.map{ NapsakCard(it) }
         memoryGame = MemoryGame(boardSize)
+
         // Recycler view adapter: The Adapter provides access to the data items.
         adapter = NapsakBoardAdapter(this,boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
@@ -120,8 +122,13 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
         // Pass the adapter and layout manager
         rvBoard.adapter = adapter
+//        mEventViewModel.readAllData.observe(this, Observer{ event_list ->
+//            Log.i("List: ",event_list.toString())
+//            //adapter.setData(plant_list)
+//        })
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(this,2) // Column numbers
     }
@@ -212,4 +219,5 @@ class MainActivity : AppCompatActivity() {
             }.show()
     }
 }
+
 

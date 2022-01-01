@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.models.BoardSize
 import com.example.napsak_app.models.Event
+import com.example.napsak_app.models.EventViewModel
 import com.example.napsak_app.models.NapsakCard
 //import com.rkpandey.mymemory.models.BoardSize
 //import com.rkpandey.mymemory.models.MemoryCard
