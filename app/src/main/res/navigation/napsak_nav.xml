@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/napsak_nav"
     app:startDestination="@id/eventListFragment">
-
     <fragment
         android:id="@+id/eventListFragment"
         android:name="com.example.napsak_app.EventListFragment"
-        android:label="fragment_event_list"
-        tools:layout="@layout/fragment_event_list" />
+        android:label="EventListFragment" />
 </navigation>

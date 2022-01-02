@@ -14,7 +14,6 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.napsak_app.databinding.ActivityMainBinding
 import com.example.napsak_app.databinding.ActivityNewEventBinding
 import com.example.napsak_app.models.Event
 import com.example.napsak_app.models.EventViewModel
@@ -41,7 +40,6 @@ class NewEventActivity : AppCompatActivity() {
         mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
         // Binding
         val newEventBinding: ActivityNewEventBinding = DataBindingUtil.setContentView(this,R.layout.activity_new_event)
-        //setContentView(R.layout.activity_new_event)
 
         // Assign
         etNewEventTitle = newEventBinding.etEventTitle
@@ -66,7 +64,7 @@ class NewEventActivity : AppCompatActivity() {
 
         if(areValid(eventTitle,pTime,pEntertainment,pPhysical,pSocial)){
 
-            val newEvent = Event(0, false, eventTitle, R.drawable.amean_logo, Integer.parseInt( pTime),Integer.parseInt(pEntertainment),Integer.parseInt(pPhysical),Integer.parseInt(pSocial));
+            val newEvent = Event(0, false, eventTitle, R.drawable.music, Integer.parseInt(pTime),Integer.parseInt(pEntertainment),Integer.parseInt(pPhysical),Integer.parseInt(pSocial));
 
             mEventViewModel.addEvent(newEvent)
             Toast.makeText(context,"Successfully Added!", Toast.LENGTH_SHORT).show()

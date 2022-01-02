@@ -6,6 +6,7 @@ class MemoryGame (private val boardSize: BoardSize) {
 
 
     var events: List<Event>
+    var eventListDB = emptyList<Event>()
 
 
     init {
@@ -21,7 +22,17 @@ class MemoryGame (private val boardSize: BoardSize) {
     }
 
     fun flipCard(position: Int) {
-        val event = events[position]
-        event.isFaceUp = !event.isFaceUp
+        if(eventListDB.isEmpty()){
+            val event = events[position]
+            event.isFaceUp = !event.isFaceUp
+        }else{
+            val event = eventListDB[position]
+            event.isFaceUp = !event.isFaceUp
+        }
+
+    }
+
+    fun setEventList(eventList: List<Event>){
+        this.eventListDB = eventList;
     }
 }

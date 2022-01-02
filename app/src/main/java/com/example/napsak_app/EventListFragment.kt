@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.databinding.FragmentActivityDetailsBinding
@@ -79,16 +81,30 @@ class EventListFragment : Fragment() {
             }
 
             private fun updateWithFlip(position: Int) {
-                // if the card is already flipped open detail fragment
-                if(memoryGame.events[position].isFaceUp){
-                    Log.i("Event List F.", "Event Detail Fragment will be shown")
-                    val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
-                    eventActivityIntent.putExtra("activity",memoryGame.events[position])
-                    startActivity(eventActivityIntent)
+                if(memoryGame.eventListDB.isEmpty()){
+                    // if the card is already flipped open detail fragment
+                    if(memoryGame.events[position].isFaceUp){
+                        Log.i("Event List F.", "Event Detail Fragment will be shown")
+                        val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
+                        eventActivityIntent.putExtra("activity",memoryGame.events[position])
+                        startActivity(eventActivityIntent)
+                    }else{
+                        memoryGame.flipCard(position)
+                        adapter.notifyDataSetChanged()
+                    }
                 }else{
-                    memoryGame.flipCard(position)
-                    adapter.notifyDataSetChanged()
+                    // if the card is already flipped open detail fragment
+                    if(memoryGame.eventListDB[position].isFaceUp){
+                        Log.i("Event List F.", "Event Detail Fragment will be shown")
+                        val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
+                        eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
+                        startActivity(eventActivityIntent)
+                    }else{
+                        memoryGame.flipCard(position)
+                        adapter.notifyDataSetChanged()
+                    }
                 }
+
 
             }
 
@@ -96,10 +112,12 @@ class EventListFragment : Fragment() {
 
         // Pass the adapter and layout manager
         rvBoard.adapter = adapter
-//        mEventViewModel.readAllData.observe(this, Observer{ event_list ->
-//            Log.i("List: ",event_list.toString())
-//            //adapter.setData(plant_list)
-//        })
+        mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
+        mEventViewModel.readAllData.observe(viewLifecycleOwner, Observer{ event_list ->
+            Log.i("List: ",event_list.toString())
+            adapter.setData(event_list)
+            memoryGame.setEventList(event_list)
+        })
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(requireContext(),2) // Column numbers
     }

@@ -57,7 +57,7 @@ class NapsakBoardAdapter(
                         cardClickListener.onCardClicked(position)
                     }
                 }else{
-                    val memoryCard = eventList.get(position)
+                    val memoryCard = eventList[position]
                     // Checks the card face up then shows the corresponding image
                     imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.eventImage else R.drawable.amean_logo)
                     imageButton.setOnClickListener {
@@ -89,15 +89,7 @@ class NapsakBoardAdapter(
 
         }
 
-        // This happens exactly in onBindViewHolder().
-        // Initially you will get new unused view holders and you have to
-        // fill them with data you want to display.
-        // But as you scroll you'll start getting view holders
-        // that were used for rows that went off screen
-        // and you have to replace old data that they held with new data.
         override fun onBindViewHolder(holder: NapsakBoardAdapter.ViewHolder, position: Int) {
-
-            // BU FONKSİYONU TANIMIYOR
             holder.bind(position)
         }
 
