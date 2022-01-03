@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -63,7 +65,7 @@ class EventListFragment : Fragment() {
                 // Inform the user
                 Toast.makeText(requireContext(),"New Events!!", Toast.LENGTH_SHORT).show()
                 // update the events
-                setEvents()
+                refreshEvents()
             }
         }
     }
@@ -114,6 +116,7 @@ class EventListFragment : Fragment() {
         rvBoard.adapter = adapter
         mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
         mEventViewModel.readAllData.observe(viewLifecycleOwner, Observer{ event_list ->
+            event_list.shuffled()
             Log.i("List: ",event_list.toString())
             adapter.setData(event_list)
             memoryGame.setEventList(event_list)
@@ -134,6 +137,55 @@ class EventListFragment : Fragment() {
         }
     }
 
+    // to change activity count and grid
+    private fun changeActivityGrid(){
+        // get the board size variable
+        val boardSizeView: View = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_board_size,null)
+        val radioBtnGroup = boardSizeView.findViewById<RadioGroup>(R.id.rgEventGrid)
+
+        // set default check
+        when(boardSize){
+            BoardSize.EASY -> radioBtnGroup.check(R.id.rbMinimal)
+            BoardSize.MEDIUM -> radioBtnGroup.check(R.id.rbMiddle)
+            BoardSize.HARD -> radioBtnGroup.check(R.id.rbMany)
+        }
+
+        // show alert dialog to interact with the user
+        showAlertDialog("More Events?","No Thanks","Sure!",boardSizeView,View.OnClickListener {
+            boardSize = when (radioBtnGroup.checkedRadioButtonId) {
+                R.id.rbMinimal -> BoardSize.EASY
+                R.id.rbMiddle -> BoardSize.MEDIUM
+                R.id.rbMany -> BoardSize.HARD
+                else -> {
+                    BoardSize.MEDIUM
+                }
+            }
+            Log.i("List Fragment: ","New Board Size: $boardSize")
+            setEvents()
+        })
+
+    }
+
+    // Create an alert dialog function
+    private fun showAlertDialog(title: String, cancelStr: String,acceptStr: String,view: View?, positiveClickListener: View.OnClickListener) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setView(view)
+            .setNegativeButton(cancelStr, null)
+            .setPositiveButton(acceptStr) { _, _ ->
+                positiveClickListener.onClick(null)
+            }.show()
+    }
+
+    private fun refreshEvents(){
+
+
+        memoryGame.eventListDB.forEach {22
+            it.isFaceUp = false;
+        }
+
+        adapter.setData(memoryGame.eventListDB.shuffled());
+    }
 
 
 }
