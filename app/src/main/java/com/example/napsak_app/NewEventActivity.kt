@@ -53,18 +53,31 @@ class NewEventActivity : AppCompatActivity() {
 
     }
 
-    private fun insert2database(context: Context,binding:ActivityNewEventBinding){
+    private fun insert2database(context: Context,binding: ActivityNewEventBinding){
         val eventTitle = binding.etEventTitle.text.toString()
         val pTime = binding.etTime.text.toString()
         val pEntertainment = binding.etEntertainment.text.toString()
         val pPhysical = binding.etPhysical.text.toString()
         val pSocial = binding.etSocial.text.toString()
-
-
+        val pImage = binding.etImageId.text.toString()
+        var imageResource = when(pImage){
+            "1" -> R.drawable.music
+            "2" -> R.drawable.youtube
+            "3" -> R.drawable.cinema
+            "4" -> R.drawable.walking
+            "5" -> R.drawable.chatting
+            "6" -> R.drawable.cooking
+            "7" -> R.drawable.language
+            "8" -> R.drawable.drink_water
+            "9" -> R.drawable.podcast
+            "10" -> R.drawable.reading
+            "11" -> R.drawable.sport
+            else -> R.drawable.amean_logo
+        }
 
         if(areValid(eventTitle,pTime,pEntertainment,pPhysical,pSocial)){
 
-            val newEvent = Event(0, false, eventTitle, R.drawable.music, Integer.parseInt(pTime),Integer.parseInt(pEntertainment),Integer.parseInt(pPhysical),Integer.parseInt(pSocial));
+            val newEvent = Event(0, false, eventTitle, imageResource, Integer.parseInt(pTime),Integer.parseInt(pEntertainment),Integer.parseInt(pPhysical),Integer.parseInt(pSocial));
 
             mEventViewModel.addEvent(newEvent)
             Toast.makeText(context,"Successfully Added!", Toast.LENGTH_SHORT).show()
