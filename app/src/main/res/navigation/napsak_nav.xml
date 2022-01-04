@@ -7,5 +7,9 @@
     <fragment
         android:id="@+id/eventListFragment"
         android:name="com.example.napsak_app.EventListFragment"
-        android:label="EventListFragment" />
+        android:label="EventListFragment" >
+        <action
+            android:id="@+id/action_eventListFragment_self"
+            app:destination="@id/eventListFragment" />
+    </fragment>
 </navigation>

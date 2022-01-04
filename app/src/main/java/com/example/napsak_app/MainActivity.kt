@@ -28,6 +28,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.databinding.ActivityMainBinding
@@ -47,12 +50,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NapsakBoardAdapter
     private lateinit var mainContext: Context
 
-    private lateinit var rvBoard: RecyclerView
-    private lateinit var cvNewEvent: CardView // number of Activities
-    private lateinit var cvRefresh: CardView // the matching percentage
-
-    private lateinit var mEventViewModel: EventViewModel
-
     private var boardSize: BoardSize = BoardSize.EASY
 
     // onCreate is a default function
@@ -66,43 +63,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setEvents() {
-        // Defining memoryCards
-        // val memoryCards = randomizedImages.map{ NapsakCard(it) }
-        memoryGame = MemoryGame(boardSize)
-
-        // Recycler view adapter: The Adapter provides access to the data items.
-        adapter = NapsakBoardAdapter(this,boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
-            override fun onCardClicked(position: Int) {
-                Log.i(TAG, "Card clicked $position")
-                updateWithFlip(position)
-            }
-
-            private fun updateWithFlip(position: Int) {
-                // if the card is already flipped open detail fragment
-                if(memoryGame.events[position].isFaceUp){
-                    Log.i(TAG, "Event Detail Fragment will be shown")
-                    val eventActivityIntent = Intent(mainContext,ActivitySelect::class.java)
-                    eventActivityIntent.putExtra("activity",memoryGame.events[position])
-                    startActivity(eventActivityIntent)
-                }else{
-                    memoryGame.flipCard(position)
-                    adapter.notifyDataSetChanged()
-                }
-
-            }
-
-        })
-
-        // Pass the adapter and layout manager
-        rvBoard.adapter = adapter
-//        mEventViewModel.readAllData.observe(this, Observer{ event_list ->
-//            Log.i("List: ",event_list.toString())
-//            //adapter.setData(plant_list)
-//        })
-        rvBoard.setHasFixedSize(true)
-        rvBoard.layoutManager = GridLayoutManager(this,2) // Column numbers
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.napsak_menu,menu)
@@ -126,16 +86,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private val refreshClickListener: View.OnClickListener = View.OnClickListener { view ->
-        when (view.id) {
-            R.id.cvRefresh -> {
-                // Inform the user
-                Toast.makeText(mainContext,"New Events!!",Toast.LENGTH_SHORT).show()
-                // update the events
-                setEvents()
-            }
-        }
-    }
+
 
     private val newEventclickListener: View.OnClickListener = View.OnClickListener { view ->
         when (view.id) {
@@ -173,7 +124,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             Log.i(TAG,"New Board Size: $boardSize")
-            setEvents()
+            // set fragment's rv board level
+            
         })
 
 

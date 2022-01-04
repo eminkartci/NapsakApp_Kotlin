@@ -36,7 +36,7 @@ class EventListFragment : Fragment() {
 
     private lateinit var mEventViewModel: EventViewModel
 
-    private var boardSize: BoardSize = BoardSize.EASY
+    private var boardSize: BoardSize = BoardSize.MEDIUM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

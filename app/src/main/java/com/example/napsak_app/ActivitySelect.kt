@@ -43,7 +43,7 @@ class ActivitySelect : AppCompatActivity() {
         acceptBtn.setOnClickListener {
             Toast.makeText(this, "${tempActivity.eventTitle} is added to your list!",Toast.LENGTH_LONG).show();
             if (tempActivity.eventImage == R.drawable.youtube){
-                watchYoutubeVideo(this,"ZMEFZpQABBg");
+                watchYoutubeVideo(this,"Uti2niW2BRA");
             }
 
             finish()
