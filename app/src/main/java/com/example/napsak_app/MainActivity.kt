@@ -78,9 +78,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity(personalTestIntent)
             }
 
-            R.id.im_change_size  -> {
-                changeActivityGrid()
-            }
+//            R.id.im_change_size  -> {
+//                changeActivityGrid()
+//            }
         }
 
         return super.onOptionsItemSelected(item)
