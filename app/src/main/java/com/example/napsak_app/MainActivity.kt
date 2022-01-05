@@ -88,49 +88,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private val newEventclickListener: View.OnClickListener = View.OnClickListener { view ->
-        when (view.id) {
-            R.id.cvNewEvent -> {
-                // Inform the user
-                Toast.makeText(mainContext,"What's your event?",Toast.LENGTH_LONG).show()
-                // update the events
-                val newEventIntent = Intent(mainContext,NewEventActivity::class.java)
-                startActivity(newEventIntent)
-            }
-        }
-    }
-
-    // to change activity count and grid
-    private fun changeActivityGrid(){
-        // get the board size variable
-        val boardSizeView: View = LayoutInflater.from(mainContext).inflate(R.layout.dialog_board_size,null)
-        val radioBtnGroup = boardSizeView.findViewById<RadioGroup>(R.id.rgEventGrid)
-
-        // set default check
-        when(boardSize){
-            BoardSize.EASY -> radioBtnGroup.check(R.id.rbMinimal)
-            BoardSize.MEDIUM -> radioBtnGroup.check(R.id.rbMiddle)
-            BoardSize.HARD -> radioBtnGroup.check(R.id.rbMany)
-        }
-
-        // show alert dialog to interact with the user
-        showAlertDialog("More Events?","No Thanks","Sure!",boardSizeView,View.OnClickListener {
-            boardSize = when (radioBtnGroup.checkedRadioButtonId) {
-                R.id.rbMinimal -> BoardSize.EASY
-                R.id.rbMiddle -> BoardSize.MEDIUM
-                R.id.rbMany -> BoardSize.HARD
-                else -> {
-                    BoardSize.MEDIUM
-                }
-            }
-            Log.i(TAG,"New Board Size: $boardSize")
-            // set fragment's rv board level
-            
-        })
-
-
-    }
-
     // Create an alert dialog function
     private fun showAlertDialog(title: String, cancelStr: String,acceptStr: String,view: View?, positiveClickListener: View.OnClickListener) {
         AlertDialog.Builder(this)
