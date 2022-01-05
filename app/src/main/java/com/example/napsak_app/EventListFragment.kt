@@ -25,6 +25,10 @@ import com.example.napsak_app.models.User
 
 class EventListFragment : Fragment() {
 
+    companion object {
+        private var TAG = "EVENT LIST FRAGMENT";
+    }
+
     private lateinit var listBinding: FragmentEventListBinding
 
     private lateinit var memoryGame: MemoryGame
@@ -36,7 +40,7 @@ class EventListFragment : Fragment() {
 
     private lateinit var mEventViewModel: EventViewModel
 
-    private var boardSize: BoardSize = BoardSize.MEDIUM
+    private var boardSize: BoardSize = BoardSize.EASY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +69,7 @@ class EventListFragment : Fragment() {
                 // Inform the user
                 Toast.makeText(requireContext(),"New Events!!", Toast.LENGTH_SHORT).show()
                 // update the events
-                refreshEvents()
+                setEvents()
             }
         }
     }
@@ -83,12 +87,13 @@ class EventListFragment : Fragment() {
             }
 
             private fun updateWithFlip(position: Int) {
+                Log.i("DB Length: ",memoryGame.eventListDB.size.toString());
                 if(memoryGame.eventListDB.isEmpty()){
                     // if the card is already flipped open detail fragment
                     if(memoryGame.events[position].isFaceUp){
-                        Log.i("Event List F.", "Event Detail Fragment will be shown")
+                        Log.i("DEFAULT", "Event Detail Fragment will be shown")
                         val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
-                        eventActivityIntent.putExtra("activity",memoryGame.events[position])
+                        eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
                         startActivity(eventActivityIntent)
                     }else{
                         memoryGame.flipCard(position)
@@ -97,7 +102,7 @@ class EventListFragment : Fragment() {
                 }else{
                     // if the card is already flipped open detail fragment
                     if(memoryGame.eventListDB[position].isFaceUp){
-                        Log.i("Event List F.", "Event Detail Fragment will be shown")
+                        Log.i("DATABASE", "Event Detail Fragment will be shown")
                         val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
                         eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
                         startActivity(eventActivityIntent)
@@ -116,10 +121,8 @@ class EventListFragment : Fragment() {
         rvBoard.adapter = adapter
         mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
         mEventViewModel.readAllData.observe(viewLifecycleOwner, Observer{ event_list ->
-            event_list.shuffled()
-            Log.i("List: ",event_list.toString())
-            adapter.setData(event_list)
-            memoryGame.setEventList(event_list)
+            memoryGame.setEventList(memoryGame.eventListDB.shuffled())
+            adapter.setData(memoryGame.eventListDB);
         })
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager = GridLayoutManager(requireContext(),2) // Column numbers
@@ -178,14 +181,15 @@ class EventListFragment : Fragment() {
     }
 
     private fun refreshEvents(){
+        Log.i(TAG,"Events Refresh!")
 
-
-        memoryGame.eventListDB.forEach {22
+        memoryGame.setEventList(memoryGame.eventListDB.shuffled())
+        memoryGame.eventListDB.forEach {
             it.isFaceUp = false;
         }
-
-        adapter.setData(memoryGame.eventListDB.shuffled());
+        adapter.setData(memoryGame.eventListDB);
     }
+
 
 
 }

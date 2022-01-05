@@ -50,8 +50,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: NapsakBoardAdapter
     private lateinit var mainContext: Context
 
-    private var boardSize: BoardSize = BoardSize.EASY
-
     // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {
         // call super constructor
