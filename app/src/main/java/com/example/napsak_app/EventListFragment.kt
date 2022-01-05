@@ -79,53 +79,54 @@ class EventListFragment : Fragment() {
         // val memoryCards = randomizedImages.map{ NapsakCard(it) }
         memoryGame = MemoryGame(boardSize)
 
-        // Recycler view adapter: The Adapter provides access to the data items.
-        adapter = NapsakBoardAdapter(requireContext(),boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
-            override fun onCardClicked(position: Int) {
-                Log.i("Event List F.", "Card clicked $position")
-                updateWithFlip(position)
-            }
 
-            private fun updateWithFlip(position: Int) {
-                Log.i("DB Length: ",memoryGame.eventListDB.size.toString());
-                if(memoryGame.eventListDB.isEmpty()){
-                    // if the card is already flipped open detail fragment
-                    if(memoryGame.events[position].isFaceUp){
-                        Log.i("DEFAULT", "Event Detail Fragment will be shown")
-                        val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
-                        eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
-                        startActivity(eventActivityIntent)
-                    }else{
-                        memoryGame.flipCard(position)
-                        adapter.notifyDataSetChanged()
-                    }
-                }else{
-                    // if the card is already flipped open detail fragment
-                    if(memoryGame.eventListDB[position].isFaceUp){
-                        Log.i("DATABASE", "Event Detail Fragment will be shown")
-                        val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
-                        eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
-                        startActivity(eventActivityIntent)
-                    }else{
-                        memoryGame.flipCard(position)
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-
-
-            }
-
-        })
-
-        // Pass the adapter and layout manager
-        rvBoard.adapter = adapter
         mEventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
         mEventViewModel.readAllData.observe(viewLifecycleOwner, Observer{ event_list ->
-            memoryGame.setEventList(memoryGame.eventListDB.shuffled())
+
+            memoryGame.setEventList(event_list.shuffled())
+            memoryGame.eventListDB.forEach {
+                it.isFaceUp = false;
+            }
+            // Recycler view adapter: The Adapter provides access to the data items.
+            Log.i("Event DB size: ",memoryGame.eventListDB.size.toString());
+            adapter = NapsakBoardAdapter(requireContext(),boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
+                override fun onCardClicked(position: Int) {
+                    Log.i("Event List F.", "Card clicked $position")
+                    updateWithFlip(position)
+                }
+                private fun updateWithFlip(position: Int) {
+                    Log.i("DB Length: ",memoryGame.eventListDB.size.toString());
+                    if(memoryGame.eventListDB.isEmpty()){
+                        // if the card is already flipped open detail fragment
+                        if(memoryGame.events[position].isFaceUp){
+                            Log.i("DEFAULT", "Event Detail Fragment will be shown")
+                            val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
+                            eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
+                            startActivity(eventActivityIntent)
+                        }else{
+                            memoryGame.flipCard(position)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }else{
+                        // if the card is already flipped open detail fragment
+                        if(memoryGame.eventListDB[position].isFaceUp){
+                            Log.i("DATABASE", "Event Detail Fragment will be shown")
+                            val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
+                            eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
+                            startActivity(eventActivityIntent)
+                        }else{
+                            memoryGame.flipCard(position)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
+            // Pass the adapter and layout manager
             adapter.setData(memoryGame.eventListDB);
+            rvBoard.adapter = adapter
+            rvBoard.setHasFixedSize(true)
+            rvBoard.layoutManager = GridLayoutManager(requireContext(),2) // Column numbers
         })
-        rvBoard.setHasFixedSize(true)
-        rvBoard.layoutManager = GridLayoutManager(requireContext(),2) // Column numbers
     }
 
     private val newEventclickListener: View.OnClickListener = View.OnClickListener { view ->
