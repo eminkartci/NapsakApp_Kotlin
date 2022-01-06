@@ -17,15 +17,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.databinding.FragmentActivityDetailsBinding
 import com.example.napsak_app.databinding.FragmentEventListBinding
-import com.example.napsak_app.models.BoardSize
-import com.example.napsak_app.models.EventViewModel
-import com.example.napsak_app.models.MemoryGame
-import com.example.napsak_app.models.User
+import com.example.napsak_app.models.*
 import com.example.napsak_app.services.UserAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Error
+import kotlin.math.pow
 
 
 class EventListFragment : Fragment() {
@@ -34,21 +32,11 @@ class EventListFragment : Fragment() {
         private var TAG = "EVENT LIST FRAGMENT";
     }
 
-    init{
-        try {
-            getUser();
-        }catch (error:Error){
-            Log.i("ERROR GET USER:",error.toString());
-        }
-
-    }
-
-
     private lateinit var listBinding: FragmentEventListBinding
 
     private lateinit var memoryGame: MemoryGame
     private lateinit var adapter: NapsakBoardAdapter
-    private lateinit var user:User
+    private lateinit var user: User;
 
     private lateinit var rvBoard: RecyclerView
     private lateinit var cvNewEvent: CardView // number of Activities
@@ -92,6 +80,13 @@ class EventListFragment : Fragment() {
     }
 
     private fun setEvents() {
+
+        try {
+            getUser();
+        }catch (error:Error){
+            Log.i("ERROR GET USER:",error.toString());
+        }
+
         // Defining memoryCards
         // val memoryCards = randomizedImages.map{ NapsakCard(it) }
         memoryGame = MemoryGame(boardSize)
@@ -106,6 +101,7 @@ class EventListFragment : Fragment() {
             }
             // Recycler view adapter: The Adapter provides access to the data items.
             Log.i("Event DB size: ",memoryGame.eventListDB.size.toString());
+
             adapter = NapsakBoardAdapter(requireContext(),boardSize,memoryGame.events, object: NapsakBoardAdapter.CardClickListener{
                 override fun onCardClicked(position: Int) {
                     Log.i("Event List F.", "Card clicked $position")
@@ -214,6 +210,7 @@ class EventListFragment : Fragment() {
                 if (response != null) {
                     Log.i("USER: ", response.body().toString())
                     user = response.body()!!
+                    eventOrderAlgorithm();
                 }
             }
 
@@ -226,6 +223,36 @@ class EventListFragment : Fragment() {
         })
     }
 
+    private fun eventOrderAlgorithm(): List<Event>{
+
+        val eventPoints = mutableListOf<Double>();
+
+        memoryGame.eventListDB.forEach {
+            var sse = 0.0;
+            if(user != null){
+                sse = (it.timePoint - user.timeP).toDouble().pow(2.0)
+                +(it.physicalPoint - user.physicalP).toDouble().pow(2.0)
+                +(it.socialPoint - user.socialP).toDouble().pow(2.0)
+                +(it.entertainmentPoint - user.entertainmentP).toDouble().pow(2.0);
+            }
+            val random = Math.random() * 50;
+            val eventPoint = sse + random;
+
+            eventPoints.add(eventPoint);
+        }
+
+        Log.i("POINTS: ", eventPoints.toString())
+        val sortedEventList = eventPoints.sortedDescending();
+        Log.i("SORT: ", sortedEventList.toString())
+
+        sortedEventList.forEach {
+            val index = eventPoints.indexOf(it)
+            Log.i("Index: ",index.toString());
+        }
+
+        return memoryGame.eventListDB
+
+    }
 
 
 }
