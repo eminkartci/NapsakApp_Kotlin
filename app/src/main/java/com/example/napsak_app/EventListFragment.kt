@@ -213,7 +213,7 @@ class EventListFragment : Fragment() {
             override fun onResponse(call: Call<String>?, response: Response<String>?){
                 if (response != null) {
                     Log.i("USER: ", response.body().toString())
-                    user =
+                    
                 }
             }
 
