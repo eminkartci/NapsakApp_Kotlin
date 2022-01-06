@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         // DATA BINDING
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         mainContext = this
-
+        
     }
 
 

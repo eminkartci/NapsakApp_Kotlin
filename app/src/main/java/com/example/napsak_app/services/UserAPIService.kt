@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val BASE_URL = "ameandanismanlik.com"
 
@@ -19,4 +20,10 @@ interface UserAPIService{
 
     @GET("user/1")
     fun getUser() : Call<String>
+}
+
+object UserAPI{
+    val retrofitService: UserAPIService by lazy {
+        retrofit.create(UserAPIService:: class.java)
+    }
 }

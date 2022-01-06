@@ -21,6 +21,10 @@ import com.example.napsak_app.models.BoardSize
 import com.example.napsak_app.models.EventViewModel
 import com.example.napsak_app.models.MemoryGame
 import com.example.napsak_app.models.User
+import com.example.napsak_app.services.UserAPI
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class EventListFragment : Fragment() {
@@ -33,6 +37,7 @@ class EventListFragment : Fragment() {
 
     private lateinit var memoryGame: MemoryGame
     private lateinit var adapter: NapsakBoardAdapter
+    private lateinit var user:User
 
     private lateinit var rvBoard: RecyclerView
     private lateinit var cvNewEvent: CardView // number of Activities
@@ -41,6 +46,7 @@ class EventListFragment : Fragment() {
     private lateinit var mEventViewModel: EventViewModel
 
     private var boardSize: BoardSize = BoardSize.EASY
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -189,6 +195,23 @@ class EventListFragment : Fragment() {
             it.isFaceUp = false;
         }
         adapter.setData(memoryGame.eventListDB);
+    }
+
+    private fun getUser() {
+        UserAPI.retrofitService.getUser().enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>?, response: Response<String>?){
+                if (response != null) {
+                    Log.i("USER: ", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<String>?, t: Throwable?) {
+                if (t != null) {
+                    t.message?.let { Log.i("USER ERROR: ", it) }
+                }
+            }
+
+        })
     }
 
 
