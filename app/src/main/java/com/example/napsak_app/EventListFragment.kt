@@ -25,6 +25,7 @@ import com.example.napsak_app.services.UserAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Error
 
 
 class EventListFragment : Fragment() {
@@ -32,6 +33,16 @@ class EventListFragment : Fragment() {
     companion object {
         private var TAG = "EVENT LIST FRAGMENT";
     }
+
+    init{
+        try {
+            getUser();
+        }catch (error:Error){
+            Log.i("ERROR GET USER:",error.toString());
+        }
+
+    }
+
 
     private lateinit var listBinding: FragmentEventListBinding
 
@@ -202,6 +213,7 @@ class EventListFragment : Fragment() {
             override fun onResponse(call: Call<String>?, response: Response<String>?){
                 if (response != null) {
                     Log.i("USER: ", response.body().toString())
+                    user =
                 }
             }
 
