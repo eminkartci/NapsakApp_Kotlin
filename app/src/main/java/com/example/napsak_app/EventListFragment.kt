@@ -209,15 +209,15 @@ class EventListFragment : Fragment() {
     }
 
     private fun getUser() {
-        UserAPI.retrofitService.getUser().enqueue(object : Callback<String>{
-            override fun onResponse(call: Call<String>?, response: Response<String>?){
+        UserAPI.retrofitService.getUser().enqueue(object : Callback<User>{
+            override fun onResponse(call: Call<User>?, response: Response<User>?){
                 if (response != null) {
                     Log.i("USER: ", response.body().toString())
-                    
+                    user = response.body()!!
                 }
             }
 
-            override fun onFailure(call: Call<String>?, t: Throwable?) {
+            override fun onFailure(call: Call<User>?, t: Throwable?) {
                 if (t != null) {
                     t.message?.let { Log.i("USER ERROR: ", it) }
                 }
