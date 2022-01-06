@@ -210,7 +210,12 @@ class EventListFragment : Fragment() {
                 if (response != null) {
                     Log.i("USER: ", response.body().toString())
                     user = response.body()!!
-                    eventOrderAlgorithm();
+                    val events = eventOrderAlgorithm()
+                    memoryGame.setEventList(events);
+                    memoryGame.eventListDB.forEach {
+                        it.isFaceUp = false;
+                    }
+                    adapter.setData(memoryGame.eventListDB);
                 }
             }
 
@@ -226,6 +231,7 @@ class EventListFragment : Fragment() {
     private fun eventOrderAlgorithm(): List<Event>{
 
         val eventPoints = mutableListOf<Double>();
+        val eventOrdered = mutableListOf<Event>()
 
         memoryGame.eventListDB.forEach {
             var sse = 0.0;
@@ -248,9 +254,10 @@ class EventListFragment : Fragment() {
         sortedEventList.forEach {
             val index = eventPoints.indexOf(it)
             Log.i("Index: ",index.toString());
+            eventOrdered.add(memoryGame.eventListDB[index]);
         }
 
-        return memoryGame.eventListDB
+        return eventOrdered
 
     }
 
