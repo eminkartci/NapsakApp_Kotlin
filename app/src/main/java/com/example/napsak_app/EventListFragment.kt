@@ -86,8 +86,8 @@ class EventListFragment : Fragment() {
     private fun setEvents() {
 
         try {
-            userWork();
             getUser();
+            userWork();
         }catch (error:Error){
             Log.i("ERROR GET USER:",error.toString());
         }
