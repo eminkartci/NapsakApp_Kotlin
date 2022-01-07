@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.napsak_app.databinding.ActivityMainBinding
 import com.example.napsak_app.models.*
+import com.example.napsak_app.services.EventHandler
 import com.example.napsak_app.utils.DEFAULT_ICONS
 import java.lang.Error
 
@@ -57,6 +58,8 @@ class MainActivity : AppCompatActivity() {
 
         // DATA BINDING
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+
+        EventHandler.oneTimeWork();
         mainContext = this
         
     }
