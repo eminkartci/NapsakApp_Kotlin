@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         // DATA BINDING
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        EventHandler.oneTimeWork();
+        //EventHandler.oneTimeWork();
         mainContext = this
         
     }

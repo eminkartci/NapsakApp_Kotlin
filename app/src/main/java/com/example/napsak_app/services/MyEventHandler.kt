@@ -4,6 +4,7 @@ import android.app.LauncherActivity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +12,7 @@ import android.os.Build
 import android.provider.Settings.System.getString
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -23,7 +25,7 @@ class MyEventHandler(context:Context, workerParameters: WorkerParameters):Worker
 
     override fun doWork(): Result {
 
-
+        showNotification()
         Log.i("MY WORKER: ","Successful!")
         return Result.success();
     }
@@ -35,13 +37,14 @@ class MyEventHandler(context:Context, workerParameters: WorkerParameters):Worker
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            applicationContext, 0, intent, 0)
+            applicationContext, 0, intent, FLAG_IMMUTABLE)
 
         var builder = NotificationCompat.Builder(applicationContext, "4")
             .setSmallIcon(R.drawable.amean_logo)
             .setContentTitle("!! Coding !!")
             .setContentText("Have you tried this event?")
-            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            //.setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         // Create the NotificationChannel, but only on API 26+ because
@@ -60,6 +63,11 @@ class MyEventHandler(context:Context, workerParameters: WorkerParameters):Worker
 
             notificationManager.createNotificationChannel(channel)
         }
+
+        with(NotificationManagerCompat.from(applicationContext)){
+             notify(1,builder.build())
+        }
+
     }
 
 
