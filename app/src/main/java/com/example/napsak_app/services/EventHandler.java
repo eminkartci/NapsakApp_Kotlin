@@ -5,7 +5,9 @@ import android.text.format.Time;
 
 import androidx.annotation.NonNull;
 import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
@@ -30,6 +32,18 @@ public class EventHandler extends Worker {
                 .setConstraints(setConstraints()).build();
 
         WorkManager.getInstance().enqueue(otwr);
+    }
+
+    public static void periodicWork(String eventName){
+
+        PeriodicWorkRequest prwr = new PeriodicWorkRequest.Builder(
+                EventHandler.class,15,TimeUnit.SECONDS)
+                .addTag("Event Remainder!")
+                .setConstraints(setConstraints())
+                .build();
+
+        WorkManager.getInstance().enqueueUniquePeriodicWork(eventName, ExistingPeriodicWorkPolicy.REPLACE,prwr);
+
     }
 
     public static Constraints setConstraints(){
