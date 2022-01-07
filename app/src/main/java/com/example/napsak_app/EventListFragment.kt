@@ -15,9 +15,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import com.example.napsak_app.databinding.FragmentActivityDetailsBinding
 import com.example.napsak_app.databinding.FragmentEventListBinding
 import com.example.napsak_app.models.*
+import com.example.napsak_app.services.MyEventHandler
 import com.example.napsak_app.services.UserAPI
 import retrofit2.Call
 import retrofit2.Callback
@@ -82,6 +86,7 @@ class EventListFragment : Fragment() {
     private fun setEvents() {
 
         try {
+            userWork();
             getUser();
         }catch (error:Error){
             Log.i("ERROR GET USER:",error.toString());
@@ -261,5 +266,11 @@ class EventListFragment : Fragment() {
 
     }
 
+    private fun userWork(){
+
+        val userRequest : WorkRequest = OneTimeWorkRequestBuilder<MyEventHandler>().build();
+
+        WorkManager.getInstance(requireContext()).enqueue(userRequest)
+    }
 
 }
