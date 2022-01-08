@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import com.example.napsak_app.databinding.FragmentActivityDetailsBinding
 import com.example.napsak_app.databinding.FragmentEventListBinding
 import com.example.napsak_app.models.*
 import com.example.napsak_app.services.MyEventHandler

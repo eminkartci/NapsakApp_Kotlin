@@ -46,46 +46,36 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
     }
 
-    // lateinit: those variables will be initialized later because the instances are not created ye
-    private lateinit var memoryGame: MemoryGame
-    private lateinit var adapter: NapsakBoardAdapter
     private lateinit var mainContext: Context
 
     // onCreate is a default function
     override fun onCreate(savedInstanceState: Bundle?) {
         // call super constructor
         super.onCreate(savedInstanceState)
-
         // DATA BINDING
         val mainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-
-        //EventHandler.oneTimeWork();
         mainContext = this
-        
     }
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.napsak_menu,menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when(item.itemId){
             R.id.im_personal_test -> {
                 // Go to the test activity
                 val personalTestIntent = Intent(mainContext,PersonalTestActivity::class.java)
                 startActivity(personalTestIntent)
             }
-
 //            R.id.im_change_size  -> {
 //                changeActivityGrid()
 //            }
         }
-
         return super.onOptionsItemSelected(item)
     }
+
+
+
 
 
 
