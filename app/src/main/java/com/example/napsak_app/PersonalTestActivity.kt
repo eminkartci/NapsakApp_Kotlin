@@ -12,6 +12,9 @@ import androidx.databinding.DataBindingUtil
 import com.example.napsak_app.databinding.ActivityMainBinding
 import com.example.napsak_app.databinding.ActivityPersonalTestBinding
 import com.example.napsak_app.utils.Constants
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class PersonalTestActivity : AppCompatActivity() {
 
@@ -46,11 +49,7 @@ class PersonalTestActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Please answer the question.", Toast.LENGTH_SHORT).show()
             }
-
         }
-        
-        
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,6 +71,9 @@ class PersonalTestActivity : AppCompatActivity() {
             choicesArrayList.add(personalQuestions.get(1).answer)
             choicesArrayList.add(personalQuestions.get(2).answer)
             choicesArrayList.add(personalQuestions.get(3).answer)
+
+            saveFireStore(choicesArrayList)
+
             mainActivityIntent.putExtra("Personal_Choices",choicesArrayList)
             startActivity(mainActivityIntent)
             finish()
@@ -83,6 +85,27 @@ class PersonalTestActivity : AppCompatActivity() {
         currentQuestionIndex += 1
     }
 
+    private fun saveFireStore(choicesArrayList: ArrayList<Int>) {
+        val db = FirebaseFirestore.getInstance()
+
+        val Choices: MutableMap<String, Any> = HashMap()
+
+
+
+        for (index in 0..4) {
+
+            var questionAnswer = choicesArrayList.get(index)
+
+            Choices["questionIndex"] = index
+            Choices["questionAnswer"] = questionAnswer
+
+        }
+
+        db.collection("Choices")
+            .add(Choices)
+
+    }
+
 
     private fun isQuestionsFinished(): Boolean {
         return personalQuestions.size == currentQuestionIndex -1
@@ -92,8 +115,9 @@ class PersonalTestActivity : AppCompatActivity() {
         return pq.answer != -1
     }
 
-    private fun addListenerstoOptions(){
 
+    private fun addListenerstoOptions(){
+""
         personalTestBinding.tvOption1.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 1
             setSelectedBackground(1)
@@ -118,6 +142,8 @@ class PersonalTestActivity : AppCompatActivity() {
             personalQuestions.get(currentQuestionIndex).answer = 5
             setSelectedBackground(5)
         }
+
+
     }
 
     private fun setSelectedBackground(optionIndex: Int){
