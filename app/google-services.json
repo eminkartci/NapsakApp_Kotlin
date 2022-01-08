@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "102478022670",
+    "project_id": "napsakappkotlin",
+    "storage_bucket": "napsakappkotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102478022670:android:728a7bf3c9ed3184e8d45f",
+        "android_client_info": {
+          "package_name": "com.example.napsak_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102478022670-863s8v8k5n3e11ipl9vtcuihubokajcs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBszcuYf_pV0-ChcHOzPwATXl3SvMWBowc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102478022670-863s8v8k5n3e11ipl9vtcuihubokajcs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
