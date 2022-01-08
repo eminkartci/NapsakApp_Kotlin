@@ -86,21 +86,18 @@ class PersonalTestActivity : AppCompatActivity() {
     }
 
     private fun saveFireStore(choicesArrayList: ArrayList<Int>) {
+        // create FireStoree instance
         val db = FirebaseFirestore.getInstance()
-
+        // Seciton name in firebase
         val Choices: MutableMap<String, Any> = HashMap()
 
-
-
+        // Adding question Index and Question answer to firebase
         for (index in 0..4) {
-
             var questionAnswer = choicesArrayList.get(index)
 
             Choices["questionIndex"] = index
             Choices["questionAnswer"] = questionAnswer
-
         }
-
         db.collection("Choices")
             .add(Choices)
 
