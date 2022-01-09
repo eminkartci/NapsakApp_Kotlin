@@ -48,7 +48,6 @@ class NewEventActivity : AppCompatActivity() {
 
         btnShare.setOnClickListener {
             insert2database(this,newEventBinding);
-            finish();
         }
 
     }

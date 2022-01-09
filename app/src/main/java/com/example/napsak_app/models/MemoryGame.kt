@@ -22,7 +22,7 @@ class MemoryGame (private val boardSize: BoardSize) {
     }
 
     fun flipCard(position: Int) {
-        if(eventListDB.isEmpty()){
+        if(eventListDB.size < 9){
             val event = events[position]
             event.isFaceUp = !event.isFaceUp
         }else{

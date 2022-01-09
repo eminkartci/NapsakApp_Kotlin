@@ -48,7 +48,7 @@ class NapsakBoardAdapter(
 
             // Setting Button function
             fun bind(position: Int){
-                if(eventList.size < 1){
+                if(eventList.size < 9){
                     val memoryCard = events[position]
                     // Checks the card face up then shows the corresponding image
                     imageButton.setImageResource(if (events[position].isFaceUp) memoryCard.eventImage else R.drawable.amean_logo)

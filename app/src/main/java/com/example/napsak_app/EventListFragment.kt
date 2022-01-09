@@ -113,12 +113,12 @@ class EventListFragment : Fragment() {
                 }
                 private fun updateWithFlip(position: Int) {
                     Log.i("DB Length: ",memoryGame.eventListDB.size.toString());
-                    if(memoryGame.eventListDB.isEmpty()){
+                    if(memoryGame.eventListDB.size < 9){
                         // if the card is already flipped open detail fragment
                         if(memoryGame.events[position].isFaceUp){
                             Log.i("DEFAULT", "Event Detail Fragment will be shown")
                             val eventActivityIntent = Intent(requireContext(),ActivitySelect::class.java)
-                            eventActivityIntent.putExtra("activity",memoryGame.eventListDB[position])
+                            eventActivityIntent.putExtra("activity",memoryGame.events[position])
                             startActivity(eventActivityIntent)
                         }else{
                             memoryGame.flipCard(position)
