@@ -109,7 +109,7 @@ class PersonalTestActivity : AppCompatActivity() {
 
 
     private fun isQuestionsFinished(): Boolean {
-        return personalQuestions.size == currentQuestionIndex -2
+        return personalQuestions.size -1 == currentQuestionIndex
     }
 
     private fun isAnswered(pq : PersonalQuestion): Boolean {
