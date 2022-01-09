@@ -88,21 +88,20 @@ class PersonalTestActivity : AppCompatActivity() {
     private fun saveFireStore(questionIndex:Int,answer:Int) {
 
         // create FireStore instance
-        val db = Firebase.firestore
+        val db = FirebaseFirestore.getInstance()
+        val question : MutableMap<Int,Int> = HashMap()
 
-        // stores data into a MutableMap
-        val question = hashMapOf(
-            "QuestionIndex" to questionIndex,
-            "QuestionAnswer" to answer
-        )
-        /*
-        question["QuestionIndex"] = questionIndex
-        question["QuestionAnswer"] = answer
-        */
+        question[questionIndex] = answer;
 
-        // Add values to fireStore
         db.collection("Questions")
             .add(question)
+            .addOnSuccessListener {
+                Toast.makeText(this,"Question Saved",Toast.LENGTH_SHORT);
+                Log.i("Firebase","The Question is saved!!")
+            }
+            .addOnFailureListener {
+                Log.i("Firebase","The Question couldn't saved")
+            }
 
     }
 
