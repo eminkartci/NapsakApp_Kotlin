@@ -89,9 +89,9 @@ class PersonalTestActivity : AppCompatActivity() {
 
         // create FireStore instance
         val db = FirebaseFirestore.getInstance()
-        val question : MutableMap<Int,Int> = HashMap()
+        val question : MutableMap<String,Int> = HashMap()
 
-        question[questionIndex] = answer;
+        question["Question: $questionIndex.toString()"] = answer;
 
         db.collection("Questions")
             .add(question)
