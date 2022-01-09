@@ -45,6 +45,7 @@ class PersonalTestActivity : AppCompatActivity() {
         // add click listeneter
         personalTestBinding.btnSubmit.setOnClickListener {
             if (isAnswered(personalQuestions.get(currentQuestionIndex))){
+                saveFireStore(currentQuestionIndex,personalQuestions.get(currentQuestionIndex).answer)
                 nextQuestion()
             }else{
                 Toast.makeText(this,"Please answer the question.", Toast.LENGTH_SHORT).show()
@@ -68,11 +69,12 @@ class PersonalTestActivity : AppCompatActivity() {
             val mainActivityIntent = Intent(personalTestContext,MainActivity::class.java)
             var choicesArrayList = ArrayList<Int>()
             choicesArrayList.add(personalQuestions.get(0).answer)
+            saveFireStore(0,personalQuestions.get(0).answer)
+
             choicesArrayList.add(personalQuestions.get(1).answer)
             choicesArrayList.add(personalQuestions.get(2).answer)
             choicesArrayList.add(personalQuestions.get(3).answer)
 
-            saveFireStore(choicesArrayList)
 
             mainActivityIntent.putExtra("Personal_Choices",choicesArrayList)
             startActivity(mainActivityIntent)
@@ -85,21 +87,20 @@ class PersonalTestActivity : AppCompatActivity() {
         currentQuestionIndex += 1
     }
 
-    private fun saveFireStore(choicesArrayList: ArrayList<Int>) {
-        // create FireStoree instance
+    private fun saveFireStore(questionIndex:Int,answer:Int) {
+
+        // create FireStore instance
         val db = FirebaseFirestore.getInstance()
-        // Seciton name in firebase
-        val Choices: MutableMap<String, Any> = HashMap()
+        // Colection name in firebase
+        val question: MutableMap<String, Any> = HashMap()
 
-        // Adding question Index and Question answer to firebase
-        for (index in 0..4) {
-            var questionAnswer = choicesArrayList.get(index)
+        // stores data into a MutableMap
+        question["QuestionIndex"] = questionIndex
+        question["QuestionAnswer"] = answer
 
-            Choices["questionIndex"] = index
-            Choices["questionAnswer"] = questionAnswer
-        }
-        db.collection("Choices")
-            .add(Choices)
+        // Add values to fireStore
+        db.collection("Questions")
+            .add(question)
 
     }
 
