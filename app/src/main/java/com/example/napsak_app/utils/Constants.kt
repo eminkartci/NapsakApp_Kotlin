@@ -25,14 +25,16 @@ object Constants{
         val personalQuestionList = ArrayList<PersonalQuestion>()
 
         val timeQuestion = PersonalQuestion(1,"Do you have time?",R.drawable.music,-1)
-        val socialQuestion = PersonalQuestion(1,"Do you want to socialize?",R.drawable.chatting,-1)
-        val selfImprovementQuestion = PersonalQuestion(1,"Do you want to improve yourself?",R.drawable.language,-1)
-        val physicalQuestion = PersonalQuestion(1,"Do you want to do physical activity?",R.drawable.walking,-1)
+        val socialQuestion = PersonalQuestion(2,"Do you want to socialize?",R.drawable.chatting,-1)
+        val selfImprovementQuestion = PersonalQuestion(3,"Do you want to improve yourself?",R.drawable.language,-1)
+        val physicalQuestion = PersonalQuestion(4,"Do you want to do physical activity?",R.drawable.walking,-1)
+        val additionalQuestion = PersonalQuestion(5,"---",R.drawable.walking,-1)
 
         personalQuestionList.add(timeQuestion)
         personalQuestionList.add(socialQuestion)
         personalQuestionList.add(selfImprovementQuestion)
         personalQuestionList.add(physicalQuestion)
+        personalQuestionList.add(additionalQuestion)
 
         return personalQuestionList
     }

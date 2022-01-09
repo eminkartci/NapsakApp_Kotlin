@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 
 class PersonalTestActivity : AppCompatActivity() {
 
-    private var currentQuestionIndex : Int = 0
+    private var currentQuestionIndex : Int = -1
     private lateinit var personalQuestions: ArrayList<PersonalQuestion>
 
     private lateinit var personalTestBinding: ActivityPersonalTestBinding
@@ -64,8 +64,9 @@ class PersonalTestActivity : AppCompatActivity() {
     }
 
     private fun nextQuestion(){
-
+        currentQuestionIndex += 1
         if(isQuestionsFinished()){
+            Log.i("QUESTIONS: ","Test is finished")
             val mainActivityIntent = Intent(personalTestContext,MainActivity::class.java)
             var choicesArrayList = ArrayList<Int>()
             choicesArrayList.add(personalQuestions.get(0).answer)
@@ -79,10 +80,11 @@ class PersonalTestActivity : AppCompatActivity() {
             finish()
             return;
         }
-        // Log.i("Question Size: ", "${personalQuestions.size}")
-        personalTestBinding.tvPqQuestion.text = personalQuestions.get(currentQuestionIndex).question
+        Log.i("Question Size: ", "${personalQuestions.size}")
+        Log.i("Question Index: ",currentQuestionIndex.toString())
+        personalTestBinding.tvPqQuestion.text = personalQuestions[currentQuestionIndex].question
         setSelectedBackground(-1)
-        currentQuestionIndex += 1
+
     }
 
     private fun saveFireStore(questionIndex:Int,answer:Int) {
@@ -91,7 +93,7 @@ class PersonalTestActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val question : MutableMap<String,Int> = HashMap()
 
-        question["Question: $questionIndex.toString()"] = answer;
+        question["Question: $questionIndex"] = answer;
 
         db.collection("Questions")
             .add(question)
@@ -107,7 +109,7 @@ class PersonalTestActivity : AppCompatActivity() {
 
 
     private fun isQuestionsFinished(): Boolean {
-        return personalQuestions.size == currentQuestionIndex -1
+        return personalQuestions.size == currentQuestionIndex -2
     }
 
     private fun isAnswered(pq : PersonalQuestion): Boolean {
@@ -116,7 +118,7 @@ class PersonalTestActivity : AppCompatActivity() {
 
 
     private fun addListenerstoOptions(){
-""
+
         personalTestBinding.tvOption1.setOnClickListener{
             personalQuestions.get(currentQuestionIndex).answer = 1
             setSelectedBackground(1)
