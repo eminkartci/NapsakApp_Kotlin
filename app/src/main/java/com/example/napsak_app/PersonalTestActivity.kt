@@ -69,8 +69,6 @@ class PersonalTestActivity : AppCompatActivity() {
             val mainActivityIntent = Intent(personalTestContext,MainActivity::class.java)
             var choicesArrayList = ArrayList<Int>()
             choicesArrayList.add(personalQuestions.get(0).answer)
-            saveFireStore(0,personalQuestions.get(0).answer)
-
             choicesArrayList.add(personalQuestions.get(1).answer)
             choicesArrayList.add(personalQuestions.get(2).answer)
             choicesArrayList.add(personalQuestions.get(3).answer)
@@ -90,13 +88,17 @@ class PersonalTestActivity : AppCompatActivity() {
     private fun saveFireStore(questionIndex:Int,answer:Int) {
 
         // create FireStore instance
-        val db = FirebaseFirestore.getInstance()
-        // Colection name in firebase
-        val question: MutableMap<String, Any> = HashMap()
+        val db = Firebase.firestore
 
         // stores data into a MutableMap
+        val question = hashMapOf(
+            "QuestionIndex" to questionIndex,
+            "QuestionAnswer" to answer
+        )
+        /*
         question["QuestionIndex"] = questionIndex
         question["QuestionAnswer"] = answer
+        */
 
         // Add values to fireStore
         db.collection("Questions")
